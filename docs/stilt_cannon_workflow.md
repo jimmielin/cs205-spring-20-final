@@ -22,6 +22,11 @@ Currently Loaded Modules:
 ```
 
 ## Configuring R
+In a shared environment, always install libs into your own code path:
+```bash
+export R_LIBS_USER=$SCRATCH/cs205/$USER/rlibs/:$R_LIBS_USER
+```
+
 Install the modules into `$SCRATCH/cs205/$USER/rlibs` (this is a new directory, create it).
 
 ```R
@@ -29,4 +34,17 @@ if(!require('devtools')) install.packages('devtools', lib='/n/holyscratch01/cs20
 devtools::install_github('benfasoli/uataq', lib='/n/holyscratch01/cs205/cs205u2038/rlibs')
 ```
 Use option 3.
+
+## Setup STILT run directory
+In R:
+```
+require('uataq')
+uataq::stilt_init('stilt_run')
+```
+
+## Running STILT
+After configuring STILT's run script (`run_stilt.r`) correctly, run:
+```
+Rscript run_stilt.r
+```
 

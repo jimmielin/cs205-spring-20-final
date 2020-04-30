@@ -37,9 +37,20 @@ Use option 3.
 
 ## Setup STILT run directory
 In R:
-```
+```R
 require('uataq')
 uataq::stilt_init('stilt_run')
+```
+
+## Install dependency packages
+Make sure you install the following packages **manually**:
+```R
+install.packages("Rcpp")
+install.packages("raster")
+install.packages("dplyr")
+install.packages("parallel")
+install.packages("ncdf4")
+install.packages("rslurm")
 ```
 
 ## Running STILT

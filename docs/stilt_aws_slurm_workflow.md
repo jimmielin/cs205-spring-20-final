@@ -41,3 +41,47 @@ export PATH="/home/$USER/.local/bin:$PATH"
 
 Make sure `which pcluster` gives you the correct path to the executable, in my case `/home/jimmie/.local/bin/pcluster`.
 
+* **Configure the `pcluster` stack before first run.** Read questions carefully, suggested answers are below. We are using `t2.micro` as master and `c5.4xlarge` as testing compute setups here, but you may want to check out the work to determine which set is best for you.
+
+```
+INFO: Configuration file /home/jimmie/.parallelcluster/config will be written.
+Press CTRL-C to interrupt the procedure.
+
+
+Allowed values for AWS Region ID:
+...
+14. us-east-2
+...
+AWS Region ID [us-east-1]: 14
+Allowed values for EC2 Key Pair Name:
+1. hplin_aws_cs205_us2
+EC2 Key Pair Name [hplin_aws_cs205_us2]:
+Allowed values for Scheduler:
+...
+3. slurm
+...
+Scheduler [sge]: 3
+Allowed values for Operating System:
+1. alinux
+2. alinux2
+3. centos6
+4. centos7
+5. ubuntu1604
+6. ubuntu1804
+Operating System [alinux]: 2
+Minimum cluster size (instances) [0]:
+Maximum cluster size (instances) [10]:
+Master instance type [t2.micro]:
+Compute instance type [t2.micro]: c5.4xlarge
+Automate VPC creation? (y/n) [n]: n
+Allowed values for VPC ID:
+1. vpc-aefc2dc5 | 3 subnets inside
+VPC ID [vpc-aefc2dc5]:
+Automate Subnet creation? (y/n) [y]:
+Allowed values for Network Configuration:
+1. Master in a public subnet and compute fleet in a private subnet
+2. Master and compute fleet in the same public subnet
+Network Configuration [Master in a public subnet and compute fleet in a private subnet]:
+Creating CloudFormation stack...
+Do not leave the terminal until the process has finished
+```

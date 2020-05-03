@@ -170,3 +170,32 @@ packages:
 spack install netcdf-c@4.7.3 r@3.6.3 proj@5.0.1 gdal@2.3.0 udunits@2.2.26 geos@3.6.2
 ```
 Don't you just like it that packages can be installed so easily?
+
+* Load the software by adding it to your environment in `~/.bashrc`:
+```bash
+# Discover environment
+export PATH=$(spack location -i openmpi)/bin:$PATH
+export PATH=$(spack location -i netcdf-c)/bin:$PATH
+export PATH=$(spack location -i r)/bin:$PATH
+
+export HOME_PROJ=$(spack location -i proj@5.0.1)
+export HOME_GDAL=$(spack location -i gdal)
+export HOME_UDUNITS=$(spack location -i udunits)
+export HOME_GEOS=$(spack location -i geos)
+export HOME_NETCDF=$(spack location -i netcdf-c)
+export HOME_R=$(spack location -i r)
+
+export PATH=$HOME_PROJ/bin:$HOME_GDAL/bin:$HOME_UDUNITS/bin:$HOME_GEOS/bin:$PATH
+export LD_LIBRARY_PATH=$HOME_PROJ/lib:$HOME_GDAL/lib:$HOME_UDUNITS/lib:$HOME_GEOS/lib:$HOME_NETCDF/lib:$LD_LIBRARY_PATH
+```
+
+Taking note of specified package versions, if any.
+Load the environment file: `. ~/.bashrc`.
+
+* First create your R library directory. **Everything that needs to be shared by nodes needs to be on `/shared`!**
+```bash
+mkdir /shared/rlibs
+export R_LIBS_USER=/shared/rlibs:$R_LIBS_USER
+```
+
+### Obtaining STILT

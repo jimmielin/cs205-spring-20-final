@@ -13,7 +13,15 @@ extremely useful for understanding atmospheric datasets. As the numbers of parti
 ### The Needs for HPC and Big Data
     
 ## Experiments
-...
+
+In a STILT run, one needs to provide at least (i) an emission dataset, (ii) a meteorological dataset, (iii) a receptor dataset, and (iv) an R script. 
+
+For the memory-light case, we used what has been provided on the official STILT site.
+https://uataq.github.io/stilt/tutorials/train.html
+
+For the memory-intensive case, we used emission and receptor datasets based on a research project that studies greenhouse gas emissions in the New York City area. The meteorological product that we chose was the Global Forecast System. The meteorological reanalysis was from March 1st, 2019 https://www.ncdc.noaa.gov/data-access/model-data/model-datasets/global-forcast-system-gfs
+	
+
 
 ## Summary 
 

@@ -146,11 +146,25 @@ sudo systemctl start slurmctld
 ```
 
 ### Setting up software environment
-* We will use [spack](https://github.com/spack/spack), an awesome software manager for HPC. Get spack:
+* We will use [spack](https://github.com/spack/spack), an awesome software manager for HPC. Get spack and `python3`:
 ```bash
 git clone https://github.com/spack/spack.git
 echo 'export PATH=/shared/spack/bin:$PATH' >> ~/.bashrc
 . ~/.bashrc
+sudo yum install python3
 ```
 
-* Get software ...
+* Tell spack we already have SLURM installed. Create `~/.spack/packages.yaml` and put this (take note of the slurm version using `srun --version`):
+```
+packages:
+  slurm:
+    paths:
+      slurm@19.05.5: /opt/slurm/
+    buildable: False
+```
+
+* Get software. **Note: I've kept version specifiers to match the Cannon configuration. A future version may be warranted.**:
+```bash
+spack install netcdf-c@4.7.3 r@3.6.3 proj@5.0.1 gdal@2.3.0 udunits@2.2.26 geos@3.6.2
+```
+Don't you just like it that packages can be installed so easily?

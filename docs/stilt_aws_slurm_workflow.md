@@ -114,7 +114,8 @@ compute_subnet_id = subnet-xxxxxxxy
 use_public_ips = false
 ```
 
-## Creating your Parallel Cluster
+## Creating and setting up your own Parallel Cluster
+### Creating the cluster
 * **Create your cluster using:** where `cs205-test1` is the name of your cluster.
 ```
 pcluster create cs205-test1
@@ -126,3 +127,30 @@ pcluster create cs205-test1
 ```
 
 * Once created, **login** using `pcluster ssh cs205-test1`. **You may have to specify your SSH key manually**.
+
+### BONUS: Enable slurm accounting
+If you want to measure task running time (like we want to for the project), you have to enable slurm accounting manually in the slurm daemon on AWS-ParallelCluster, as by default it is not used.
+
+A quick-and-dirty setup without a database, using a textfile, is simply to edit `/opt/slurm/etc/slurm.conf` and configure accounting like so:
+```
+# ACCOUNTING                                                                                                            JobAcctGatherType=jobacct_gather/linux                                                                                  JobAcctGatherFrequency=30                                                                                               #                                                                                                                       AccountingStorageType=accounting_storage/filetxt
+#AccountingStorageHost=
+AccountingStorageLoc=/opt/slurm/slurmacct
+```
+
+Then make sure you have that accounting file available:
+```bash
+sudo touch /opt/slurm/slurmacct
+sudo chown slurm:slurm /opt/slurm/slurmacct
+sudo systemctl start slurmctld
+```
+
+### Setting up software environment
+* We will use [spack](https://github.com/spack/spack), an awesome software manager for HPC. Get spack:
+```bash
+git clone https://github.com/spack/spack.git
+echo 'export PATH=/shared/spack/bin:$PATH' >> ~/.bashrc
+. ~/.bashrc
+```
+
+* Get software ...

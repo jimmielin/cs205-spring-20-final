@@ -7,11 +7,13 @@ devtools::install_github('benfasoli/uataq')
 3
 Option 3
 Quick Start here
- Rscript -e "uataq::stilt_init('myproject')"
+```
+Rscript -e "uataq::stilt_init('myproject')"
 r/run_stilt.r
 Rscript r/run_stilt.r
-module load netcdf R proj/5.0.1-fasrc01 gdal/2.3.0-fasrc01 gcc/7.1.0-fasrc01 udunits/2.2.26-fasrc01 geos/3.6.2-fasrc01  
-Run R (R version 3.5.1 (2018-07-02))
+```
+`module load netcdf R proj/5.0.1-fasrc01 gdal/2.3.0-fasrc01 gcc/7.1.0-fasrc01 udunits/2.2.26-fasrc01 geos/3.6.2-fasrc01`  
+Run `R` (R version 3.5.1 (2018-07-02))
 Run the run_stilt.r fille. 
 You can obtain MET files from Gridded Data Archives (an example is here)
       

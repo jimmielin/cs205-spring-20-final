@@ -41,7 +41,7 @@ export PATH="/home/$USER/.local/bin:$PATH"
 
 Make sure `which pcluster` gives you the correct path to the executable, in my case `/home/jimmie/.local/bin/pcluster`.
 
-* **Configure the `pcluster` stack before first run.** Read questions carefully, suggested answers are below. We are using `t2.micro` as master and `c5.4xlarge` as testing compute setups here, but you may want to check out the work to determine which set is best for you.
+* **Configure the `pcluster` stack before first run.** Read questions carefully, suggested answers are below. We are using `t3.xlarge` as master and `c5.4xlarge` as testing compute setups here, but you may want to check out the work to determine which set is best for you.
 
 ```
 INFO: Configuration file /home/jimmie/.parallelcluster/config will be written.
@@ -71,7 +71,7 @@ Allowed values for Operating System:
 Operating System [alinux]: 2
 Minimum cluster size (instances) [0]:
 Maximum cluster size (instances) [10]:
-Master instance type [t2.micro]:
+Master instance type [t2.micro]: t3.xlarge
 Compute instance type [t2.micro]: c5.4xlarge
 Automate VPC creation? (y/n) [n]: n
 Allowed values for VPC ID:
@@ -85,6 +85,8 @@ Network Configuration [Master in a public subnet and compute fleet in a private 
 Creating CloudFormation stack...
 Do not leave the terminal until the process has finished
 ```
+
+**Note on master node size:** Use `t3.xlarge` at initialization simply because it will allow you to install the software environment faster. Once that is set up you can feel free to switch to `t3.micro` or `t2.micro` covered by the free tier - it will be plenty!
 
 You will be able to find the finished configuration file, `~/.parallelcluster/config` looking something like this:
 ```

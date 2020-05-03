@@ -26,11 +26,13 @@ NOTE: you should change the time to be 4:00:00 ++
   1. Don’t forget to link met_directory to the place you keep your MET files. For example   met_directory <- file.path('/n/holyscratch01/linz_lab/CS205/METFILES')
   1. The following is the domain of the simulation lat: [-74.8, -71.0], lon: [39.7, 42.1] (New York City area) Date of interest: March 1st, 2019. 
 We used The Global Forecast System (GFS) model outputs and ran STILT backward in time for 24 hours to see where the receptors came from.  
-
+  ![](images/htr_7.png)
   1. If you look at myproject/out/, there are three sub directories there: by-id  footprints  particles [by-id is the one that actually stores things, the rest just have links to by-id]
   1. If you look inside by-id, there should be a bunch of folders  
+  ![](images/htr_9.png)
   1. Inside each folder, you should see (i) .nc file [gridded outputs], (ii) .rds file [ungridded outputs], (iii) the rest [the the following screenshot]. 
 To visualize the .nc output file, you can use my ipython notebook (Read_NC_files.ipynb) → not well written, but you should get the idea. 
+  ![](images/htr_10.png)
 
 
 Hopefully, there is no error file inside the folder because, if you did, it means that the model did not run properly.
@@ -43,6 +45,8 @@ New York City area
 lat: [-74.8, -71.0], lon: [39.7, 42.1] 
 Date of interest: March 1st, 2019.
 24 Hours 
+![](images/htr_domain.png)
 
 Below == stilt output (-24) overlay on top of Google Map. 
 600 particles 
+![](images/htr_domain_plume.png)

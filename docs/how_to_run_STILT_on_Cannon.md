@@ -1,4 +1,4 @@
-How to run STILT on Cannon 
+# How to run STILT on Cannon 
 
 MET file (20190301_gfs0p25) that I uploaded to our Google Drive folder. 
 Follow the installation here  
@@ -21,6 +21,7 @@ You can obtain MET files from Gridded Data Archives (an example is here)
 What you have to change in run_stilt.r 
 
 Pick the slurm config of your choice:
+```
 ...
 n_cores <- 1
 n_nodes <- 300
@@ -30,6 +31,6 @@ slurm_options <- list(
   partition = 'huce_cascade',
   mem = 35000
 …
-
-load(file.path(dirname(stilt_wd),"STILT_file.Rdata")), where STILT_file to be the metfile of your choice in Rdata format. 
+```
+`load(file.path(dirname(stilt_wd),"STILT_file.Rdata"))`, where STILT_file to be the metfile of your choice in Rdata format. 
 export R_LIBS_USER=$HOME/apps/3.5.1:$R_LIBS_USER

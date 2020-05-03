@@ -85,3 +85,31 @@ Network Configuration [Master in a public subnet and compute fleet in a private 
 Creating CloudFormation stack...
 Do not leave the terminal until the process has finished
 ```
+
+You will be able to find the finished configuration file, `~/.parallelcluster/config` looking something like this:
+```
+[aws]
+aws_region_name = us-east-2
+
+[global]
+cluster_template = default
+update_check = true
+sanity_check = true
+
+[aliases]
+ssh = ssh {CFN_USER}@{MASTER_IP} {ARGS}
+
+[cluster default]
+key_name = xxxxxxxx
+base_os = alinux2
+scheduler = slurm
+compute_instance_type = c5.4xlarge
+maintain_initial_size = true
+vpc_settings = default
+
+[vpc default]
+vpc_id = vpc-aefc2dc5
+master_subnet_id = subnet-xxxxxxxx
+compute_subnet_id = subnet-xxxxxxxy
+use_public_ips = false
+```

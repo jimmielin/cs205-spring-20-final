@@ -198,4 +198,24 @@ mkdir /shared/rlibs
 export R_LIBS_USER=/shared/rlibs:$R_LIBS_USER
 ```
 
+* Install some required developer dependencies
+```bash
+sudo yum install libcurl-devel
+```
+
 ### Obtaining STILT
+* Go to `/shared` and launch `R`. Make sure you are using R from spack and not a built-in copy using `which R` if you are unsure.
+```R
+install.packages('devtools')
+install.packages("Rcpp")
+install.packages("raster")
+install.packages("dplyr")
+install.packages("parallel")
+install.packages("ncdf4")
+install.packages("rslurm")
+devtools::install_github('benfasoli/uataq')
+require('uataq')
+uataq::stilt_init('stilt_run')
+```
+
+### Setting up "Memory-Light" case: STILT Train Tutorial-02

@@ -5,15 +5,15 @@ For our 205 final project, we would like to accelerate the process using (i) mpi
 
 The following guide shows a small chunk of the above mentioned work. The real case would have 600 receptors. lt would take 20 hours to complete the simulation on Cannon.  
 
-**Does STILT actually copy the MET data to every single node?? 
+## Does STILT actually copy the MET data to every single node?? 
 
-Follow How to run STILT on Cannon section for basic STILTS. 
-if (!require('devtools')) install.packages('devtools')
-devtools::install_github('benfasoli/uataq')
-uataq::stilt_init('myproject')
-Option 3
-If you can’t install packages, make sure that you have 
-export R_LIBS_USER=$HOME/apps/R_version:$R_LIBS_USER 
+* Follow How to run STILT on Cannon section for basic STILTS. 
+  *if (!require('devtools')) install.packages('devtools')
+  *devtools::install_github('benfasoli/uataq')
+  *uataq::stilt_init('myproject')
+  *Option 3
+  *If you can’t install packages, make sure that you have 
+*export R_LIBS_USER=$HOME/apps/R_version:$R_LIBS_USER 
 In the directory that you installed R (the one that you can see ‘myproject’), copy HundredReceptors.RData and past the file to that directory. For me, it is /n/holyscratch01/wofsy_lab/chulakadabba/
 This .RData has the lat/lon/altitude of all the receptors of interest (100 in total).
 You can read the .RData file easily by (i) run R, (ii) inside R, load(‘HundredReceptors.RData’), (iii) ls() [you would see receptors], (iv) type receptors [will see those 100 receptors]. 

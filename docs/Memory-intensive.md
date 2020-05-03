@@ -21,8 +21,7 @@ The following guide shows a small chunk of the above mentioned work. The real ca
 project <- 'myproject' #you do not have to name your working directory myproject… this is just a default name from the tutorial. 
 stilt_wd <- file.path('/n/holyscratch01/wofsy_lab/chulakadabba/', project)
   1. You can change the number of particles/nodes/cores etc inside the script 
-NOTE: you should change the time to be 4:00:00 ++ 
-
+NOTE: you should change the time to be 4:00:00 ++  
   ![](images/htr_5.png)
   1. Don’t forget to link met_directory to the place you keep your MET files. For example   met_directory <- file.path('/n/holyscratch01/linz_lab/CS205/METFILES')
   1. The following is the domain of the simulation lat: [-74.8, -71.0], lon: [39.7, 42.1] (New York City area) Date of interest: March 1st, 2019. 

@@ -113,3 +113,16 @@ master_subnet_id = subnet-xxxxxxxx
 compute_subnet_id = subnet-xxxxxxxy
 use_public_ips = false
 ```
+
+## Creating your Parallel Cluster
+* **Create your cluster using:** where `cs205-test1` is the name of your cluster.
+```
+pcluster create cs205-test1
+```
+
+```diff
+- It goes without saying, but please be reminded to terminate your cluster  -
+- at end of your work, otherwise you WILL BE CHARGED FOR THE IDLE USAGE!    -
+```
+
+* Once created, **login** using `pcluster ssh cs205-test1`. **You may have to specify your SSH key manually**.

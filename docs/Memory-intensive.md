@@ -37,11 +37,11 @@ Hopefully, there is no error file inside the folder because, if you did, it mean
 
 
 
-##Domain of the simulation
-New York City area 
-lat: [-74.8, -71.0], lon: [39.7, 42.1] 
-Date of interest: March 1st, 2019.
-24 Hours 
+## Domain of the simulation
+    New York City area 
+    lat: [-74.8, -71.0], lon: [39.7, 42.1] 
+    Date of interest: March 1st, 2019.
+    24 Hours 
 
-Below == stilt output (-24) overlay on top of Google Map. 
-600 particles 
+    Below == stilt output (-24) overlay on top of Google Map. 
+    600 particles 

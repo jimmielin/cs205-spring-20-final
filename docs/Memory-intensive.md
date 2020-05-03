@@ -7,7 +7,7 @@ The following guide shows a small chunk of the above mentioned work. The real ca
 
 ## Does STILT actually copy the MET data to every single node?? 
 
-* Follow How to run STILT on Cannon section for basic STILTS. 
+ Markup : * Follow How to run STILT on Cannon section for basic STILTS. 
   *if (!require('devtools')) install.packages('devtools')
   *devtools::install_github('benfasoli/uataq')
   *uataq::stilt_init('myproject')

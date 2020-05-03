@@ -7,12 +7,12 @@ The following guide shows a small chunk of the above mentioned work. The real ca
 
 ## Does STILT actually copy the MET data to every single node?? 
 
-  1. Follow How to run STILT on Cannon section for basic STILTS. 
-   i. if (!require('devtools')) install.packages('devtools')
-   ii. devtools::install_github('benfasoli/uataq')
-   iii. uataq::stilt_init('myproject')
-   iv. Option 3
-   v. If you can’t install packages, make sure that you have 
+  * Follow How to run STILT on Cannon section for basic STILTS.  
+    * if (!require('devtools')) install.packages('devtools')
+    * devtools::install_github('benfasoli/uataq')
+    * uataq::stilt_init('myproject')
+    * Option 3
+    * If you can’t install packages, make sure that you have 
 * export R_LIBS_USER=$HOME/apps/R_version:$R_LIBS_USER 
 * In the directory that you installed R (the one that you can see ‘myproject’), copy HundredReceptors.RData and past the file to that directory. For me, it is /n/holyscratch01/wofsy_lab/chulakadabba/
 This .RData has the lat/lon/altitude of all the receptors of interest (100 in total).

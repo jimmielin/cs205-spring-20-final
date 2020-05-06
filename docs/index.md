@@ -32,8 +32,9 @@ The STILT model code used in this work is available at https://github.com/uataq/
 
 ### The Needs for HPC and Big Data
 
-### Solution and comparision with existing work
-In this project, we are using a combination of two solutions. The first solution is simply following Fasoli et al. 2018's workflow and use R Language based slurm batch commands to split the workload. 
+### Solutions
+
+In this project, we are applying a combination of two different solutions. The first solution is to use R Language based slurm batch commands to split the workload, simply following Fasoli et al. 2018's workflow. This solution is performed on both Harvard FAS Research Computer (i.e. Cannon) and AWS. The second solution is to develop a containerized, batch version of STILT designed for use on the AWS Cloud, with the ability of properly dealing with the input data, thus enables AWS Batch-based high-performance parallel executation of STILT. Detailed descriptions of both solutions and comparision with existing work is shown in section "Parallel Methods and Performance Analysis".
 
 ## Test Cases Experiments
 

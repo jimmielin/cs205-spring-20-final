@@ -1,0 +1,35 @@
+[ec2-user@ip-172-31-48-93 r]$ sacct --format=JobID,JobName,NNodes,ReqCPUS,State,ExitCode,TotalCPU,MaxVMSize,Elapsed,ElapsedRaw
+       JobID    JobName   NNodes  ReqCPUS      State ExitCode   TotalCPU  MaxVMSize    Elapsed ElapsedRaw
+------------ ---------- -------- -------- ---------- -------- ---------- ---------- ---------- ----------
+2                  bash        1        1  COMPLETED      0:0  00:00.863    274360K   00:00:22         22
+3             stilt_run        1        8  COMPLETED      0:0   00:00:00              00:01:49        109
+4             stilt_run        1        4  COMPLETED      0:0   00:00:00              00:03:27        207
+5             stilt_run        1        2  COMPLETED      0:0   00:00:00              00:06:43        403
+6             stilt_run        1        1  COMPLETED      0:0   00:00:00              00:13:14        794
+
+7             stilt_run        1        1  COMPLETED      0:0   00:00:00              00:06:33        393
+8             stilt_run        1        1  COMPLETED      0:0   00:00:00              00:06:39        399
+
+9             stilt_run        1        2  COMPLETED      0:0   00:00:00              00:03:22        202
+10            stilt_run        1        2  COMPLETED      0:0   00:00:00              00:03:24        204
+
+11            stilt_run        1        4  COMPLETED      0:0   00:00:00              00:01:49        109
+12            stilt_run        1        4  COMPLETED      0:0   00:00:00              00:01:49        109
+
+13            stilt_run        1        8  COMPLETED      0:0   00:00:00              00:01:18         78
+14            stilt_run        1        8  COMPLETED      0:0   00:00:00              00:01:19         79
+
+15            stilt_run        1       18  COMPLETED      0:0   00:00:00              00:00:53         53
+16            stilt_run        1        9  COMPLETED      0:0   00:00:00              00:01:39         99
+17            stilt_run        1       16  COMPLETED      0:0   00:00:00              00:01:01         61
+18            stilt_run        1        8  COMPLETED      0:0   00:00:00              00:01:48        108
+19            stilt_run        1        4  COMPLETED      0:0   00:00:00              00:03:27        207
+20            stilt_run        1        2  COMPLETED      0:0   00:00:00              00:06:42        402
+21            stilt_run        1        1  COMPLETED      0:0   00:00:00              00:13:12        792
+
+25           stilt_run+        1        4  COMPLETED      0:0   00:00:00              04:54:00      17640
+26           stilt_run+        1        8  COMPLETED      0:0   00:00:00              02:52:39      10359
+
+27           stilt_run+        1        2  COMPLETED      0:0   00:00:00              06:00:06      37905
+
+56           stilt_run+        1       16  COMPLETED      0:0   00:00:00              01:32:39       5559

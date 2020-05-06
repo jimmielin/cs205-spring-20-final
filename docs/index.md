@@ -28,9 +28,12 @@ Quick intro or sth
 Stochastic Time-Inverted Lagrangian Transport Model or STILT model is an atmospheric model that simulates air parcel movements using ensembles of particles starting from a particular time and location.  Although the model can run both forward and backward in time from the given starting location, the backward runs are more commonly used. The knowledge of air particle trajectories depends on the specified receptors, which are the locations that the measurements were made.  From the information obtained via STILT, one can construct the influence of an atmospheric observation, which has proven to be extremely useful for understanding atmospheric datasets. As the numbers of particles and receptors increase, the information of specific atmospheric datasets increases as well as the computational cost. Thus, the main challenge of using STILT is to come up with optimal numbers of receptors, numbers of particles, and the time that needs to be running backward for.
 
 ### Model Code
-The STILT model code used in this work is available at ... 
+The STILT model code used in this work is available at https://github.com/uataq/stilt. 
 
 ### The Needs for HPC and Big Data
+
+### Solution and comparision with existing work
+In this project, we are using a combination of two solutions. The first solution is simply following Fasoli et al. 2018's workflow and use R Language based slurm batch commands to split the workload. 
 
 ## Test Cases Experiments
 
@@ -87,3 +90,4 @@ We benchmark this AWS Batch-based parallelization approach with the benchmark ca
 
 
 ## References
+Fasoli, Benjamin, et al. "Simulating atmospheric tracer concentrations for spatially distributed receptors: updates to the Stochastic Time-Inverted Lagrangian Transport model's R interface (STILT-R version 2)." Geoscientific Model Development 11.7 (2018). 

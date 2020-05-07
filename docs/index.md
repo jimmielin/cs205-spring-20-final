@@ -103,6 +103,8 @@ The AWS Batch case is then best optimized according to the following guidelines:
 
 #### Performance Analysis: Memory-Light Case
 ...
+![](images/Weak_Scaling.png)
+
 
 #### Performance Analysis: Memory-Intensive Case
 
@@ -110,7 +112,11 @@ The AWS Batch case is then best optimized according to the following guidelines:
 
 ### Reproducibility Information
 #### SLURM-based on Harvard Cannon
+##### Partitions
 The memory-light case is conducted on huce_cascade partition of Cannon, which belongs to the Harvard University Center for the Environment (HUCE). This partition is comprised of 2880 cores of water cooled Intel Cascade Lake, each node has 48 cores and 192 GB of RAM. Subject to requeue by huce_cascade_priority. A document for this partition can be found at https://docs.rc.fas.harvard.edu/kb/huce-partitions/.
+The memory-intensive case is runned on .....(Ju)
+##### Cost model
+We are not really asked to pay for the resources we used on Cannon, that said, we can still refer to the Billing model of FASRC for other schools around Harvard, to get a estimation for the cost for the computational resources. This cost can serve as a reference relative to the cost of AWS nodes. The cost model can be find at the following two websites: 1. https://www.rc.fas.harvard.edu/policy/billing-faq/; 2. https://docs.rc.fas.harvard.edu/kb/fairshare/. Generally speaking, the cost model follows the table below, and subject to some
 
 #### SLURM-based on AWS Cloud
 Please refer to the [STILT on AWS - ParallelCluster workflow document](https://github.com/jimmielin/cs205-spring-20-final/blob/master/docs/stilt_aws_slurm_workflow.md). The primary elements of the set up include:

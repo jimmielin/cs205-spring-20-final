@@ -120,7 +120,8 @@ The memory-light case is conducted on huce_cascade partition of Cannon, which be
 The memory-intensive case is runned on .....(Ju)
 ##### Cost model
 We are not really asked to pay for the resources we used on Cannon, that said, we can still refer to the Billing model of FASRC for other schools around Harvard, to get a estimation for the cost for the computational resources. This cost can serve as a reference relative to the cost of AWS nodes. The cost model can be find at the following two websites: 1. https://www.rc.fas.harvard.edu/policy/billing-faq/; 2. https://docs.rc.fas.harvard.edu/kb/fairshare/. Generally speaking, the cost model follows the table below (From the document 1 above), and subject to some minor modification according to the type of the machines and their detailed memory/core settings.
-| TYPE | # of Workers | SERVICE UNIT | COST PER CPU/HR|
+
+| TYPE | SERVICE UNIT | COST PER CPU/HR|
 | ---------  | ------------ | ----------- |
 | Shared | 1 Core + 4GB RAM | $0.0205 | 
 | requeue/Lab Owned | 1 Core + 4GB RAM | $0.0029| 

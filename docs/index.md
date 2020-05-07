@@ -80,10 +80,32 @@ We benchmark this AWS Batch-based parallelization approach with the benchmark ca
 #### SLURM-based on Harvard Cannon
 
 #### SLURM-based on AWS Cloud
+Please refer to the [STILT on AWS - ParallelCluster workflow document](https://github.com/jimmielin/cs205-spring-20-final/blob/master/docs/stilt_aws_slurm_workflow.md).
 
 #### AWS Batch
 
-...
+Please refer to the [STILT on AWS - AWS Batch workflow document](https://github.com/jimmielin/cs205-spring-20-final/blob/master/docs/stilt_aws_docker_workflow.md).
+
+* **FSx High-Performance File System**: Created on `us-east-2` with storage capacity of `1.2 TiB` and `200 MB/s/TiB (up to 1.3 GB/s/TiB burst)` highest-performance option for a throughput capacity of `234 MB/s`. Mounted on `/fsx` through all AWS Batch instances. Pricing is calculated using **persistent, 200 MB/s/TiB baseline** cost of `$0.29 GB/month`. For this instance this works out to be `$356.352/month` or `$0.00330/second`.
+
+Manual mount of this file system from within another EC2 instance is through the Lustre client:
+```
+sudo mount -t lustre -o noatime,flock fs-0a65a1969f67faf8b.fsx.us-east-2.amazonaws.com@tcp:/c5lb5bmv /fsx
+```
+
+Obtain the mount name (corresponding to the part after `tcp:/`) from `aws fsx describe-filesystems`. This has recently changed. Be careful.
+
+Make sure that [the VPC security groups are correctly configured](https://docs.aws.amazon.com/fsx/latest/LustreGuide/limit-access-security-groups.html#fsx-vpc-security-groups) for both the FSx VPC and the VPC security group corresponding to the instances accessing the Lustre file system.
+
+If all else fails, [here is troubleshooting instructions](https://docs.aws.amazon.com/fsx/latest/LustreGuide/troubleshooting.html).
+
+* Docker container stored on Amazon ECS (Elastic Container Storage). Costs for AWS ECS not considered as it can be easily covered in the AWS ECR free-tier of 500 MB/month storage. Our container is sized twice the allowance but it does not need to be kept for long:
+
+```
+$ docker images --filter reference=stilt
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+stilt               latest              7e6c965f4677        4 hours ago         1.86GB
+```
 
 ## Conclusion 
 

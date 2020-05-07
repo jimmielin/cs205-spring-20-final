@@ -59,7 +59,7 @@ For the memory-intensive case, we used emission and receptor datasets based on a
 ### Parallel Methods and Performance Analysis
 #### SLURM-based node parallelization
 
-STILT includes a SLURM workload manager-based parallelization capability which we benchmark, analyze and optimized on the two computational cases previously described. The SLURM parallelization is developed in Fasoli et al., 2018 and uses SLURM to launch a set of processes on different nodes in a shared run directory. A schematic diagram for the parallelization pipeline is shown here.
+STILT includes a SLURM workload manager-based parallelization capability which we benchmark, analyze and optimized on the two computational cases previously described. The SLURM parallelization is developed in Fasoli et al., 2018 and uses SLURM to launch a set of processes on different nodes in a shared run directory. A schematic diagram for the parallelization pipeline from Fasoli et al., 2018 is shown here.
 
 ![](images/STILT_R_Parallel.png)
 
@@ -110,6 +110,7 @@ The AWS Batch case is then best optimized according to the following guidelines:
 
 ### Reproducibility Information
 #### SLURM-based on Harvard Cannon
+The memory-light case is conducted on huce_cascade partition of Cannon, which belongs to the Harvard University Center for the Environment (HUCE). This partition is comprised of 2880 cores of water cooled Intel Cascade Lake, each node has 48 cores and 192 GB of RAM. Subject to requeue by huce_cascade_priority. A document for this partition can be found at https://docs.rc.fas.harvard.edu/kb/huce-partitions/.
 
 #### SLURM-based on AWS Cloud
 Please refer to the [STILT on AWS - ParallelCluster workflow document](https://github.com/jimmielin/cs205-spring-20-final/blob/master/docs/stilt_aws_slurm_workflow.md). The primary elements of the set up include:

@@ -72,9 +72,18 @@ We thus use the following architecture for our AWS Batch based parallelization a
 
 This approach is a hybrid parallel approach. It is parallel at the node level by launching multiple batch workers, and parallel within nodes by launching multiple processes within each batch worker.
 
-We benchmark this AWS Batch-based parallelization approach with the benchmark cases, by using different container sizes (number of cores per node) and different number of containers (number of nodes), and comparing to previous results for cost-efficiency and scalability.
+We benchmark this AWS Batch-based parallelization approach with the memory-heavy benchmark case, by using different container sizes (number of cores per node) and different number of containers (number of nodes), and comparing to previous results for cost-efficiency and scalability.
 
-...
+Due to the significant overhead associated with launching new EC2 instances, AWS Batch should only be used in a situation where the test case is sufficiently computationally intensive. For the "memory-light" case previously mentioned it may be simpler to use one large EC2 instance. The AWS Batch parallelization is most efficiently used in memory and compute-intensive cases that take a long time to run and can be efficiently sped up with horizontal scaling. As demonstrated in our test results, AWS Batch jobs enable "infinite" horizontal scaling of instances. It is important to note that we do not consider the overhead of launching the EC2 instances in our testing, as the instances have been previously pre-started by specifying a "Minimum vCPU" parameter in the AWS Batch Compute Environment description. In our experience it takes anytime from 2-5 minutes to spin up EC2 instances that are ready for use in Batch: thus the target computational time should be at least an order of magnitude higher than this time frame to be efficient.
+
+Results for the memory-heavy case using AWS Batch:
+| Node Type | # of Workers | CPUs/Worker | Runtime [s] | Cost [$] |
+| --------- | ------------ | ----------- | ----------- | -------- |
+| r5.2xlarge| 4 | 4 | 4385 | 0.4175 |
+| r5.2xlarge| 10 | 4 | ... | ... |
+
+
+Cost is calculated using the spot instance price of $0.0857/hr for r5.2xlarge.
 
 ### Reproducibility Information
 #### SLURM-based on Harvard Cannon
@@ -115,8 +124,6 @@ $ docker images --filter reference=stilt
 REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
 stilt               latest              7e6c965f4677        4 hours ago         1.86GB
 ```
-
-
 
 * **Launch Template**. Uses user data to mount the Lustre file system at `fsx`:
 ```

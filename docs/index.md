@@ -84,7 +84,7 @@ Please refer to the [STILT on AWS - ParallelCluster workflow document](https://g
 
 #### AWS Batch
 
-Please refer to the [STILT on AWS - AWS Batch workflow document](https://github.com/jimmielin/cs205-spring-20-final/blob/master/docs/stilt_aws_docker_workflow.md).
+Please refer to the [STILT on AWS - AWS Batch container creation](https://github.com/jimmielin/cs205-spring-20-final/blob/master/docs/stilt_aws_docker_workflow.md) for the creation steps for the container.
 
 * **FSx High-Performance File System**: Created on `us-east-2` with storage capacity of `1.2 TiB` and `200 MB/s/TiB (up to 1.3 GB/s/TiB burst)` highest-performance option for a throughput capacity of `234 MB/s`. Mounted on `/fsx` through all AWS Batch instances. Pricing is calculated using **persistent, 200 MB/s/TiB baseline** cost of `$0.29 GB/month`. For this instance this works out to be `$356.352/month` or `$0.00330/second`.
 
@@ -99,12 +99,55 @@ Make sure that [the VPC security groups are correctly configured](https://docs.a
 
 If all else fails, [here is troubleshooting instructions](https://docs.aws.amazon.com/fsx/latest/LustreGuide/troubleshooting.html).
 
-* Docker container stored on Amazon ECS (Elastic Container Storage). Costs for AWS ECS not considered as it can be easily covered in the AWS ECR free-tier of 500 MB/month storage. Our container is sized twice the allowance but it does not need to be kept for long:
+Filesystem input setup:
+```
+$ ls -R /fsx
+/fsx:        in  out
+  /fsx/in:     HundredReceptors.RData  met
+    /fsx/in/met:  20190301_gfs0p25
+  /fsx/out:
+```
+
+* **Docker container stored on Amazon ECS (Elastic Container Storage).** Costs for AWS ECS not considered as it can be easily covered in the AWS ECR free-tier of 500 MB/month storage. Our container is sized twice the allowance but it does not need to be kept for long:
 
 ```
 $ docker images --filter reference=stilt
 REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
 stilt               latest              7e6c965f4677        4 hours ago         1.86GB
+```
+
+
+
+* **Launch Template**. Uses user data to mount the Lustre file system at `fsx`:
+```
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="==MYBOUNDARY=="
+
+--==MYBOUNDARY==
+Content-Type: text/cloud-config; charset="us-ascii"
+
+runcmd:
+- file_system_id_01=fs-0a65a1969f67faf8b
+- region=us-east-2
+- fsx_directory=/c5lb5bmv
+- amazon-linux-extras install -y lustre2.10
+- mkdir -p ${fsx_directory}
+- mount -t lustre ${file_system_id_01}.fsx.${region}.amazonaws.com@tcp:/c5lb5bmv ${fsx_directory}
+
+--==MYBOUNDARY==--
+```
+In addition to a 8GB `gp2` mount at `/dev/xva` for base node-local storage.
+
+* **Setting up AWS Batch**:
+  + **Create Spot Fleet Role** for IAM [following these instructions](https://docs.aws.amazon.com/batch/latest/userguide/spot_fleet_IAM_role.html).
+  + **Create Launch Template** as above.
+  + **Create AWS Batch Compute Environment**: Created with `r5.2xlarge` (4C8T, 64GB Memory) instances only, accommodating 4 cores each. We use fixed instance types in our project but this could easily be adapted to scale to any combination of spot r5 instances. Use spot instances with the previously created spot fleet. Choose the `StiltBatchLT` launch template created above. Use the **Amazon Linux 2** [AMI](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ecs-optimized_AMI.html) (for `us-east-2` the AMI ID is `ami-0d9ef3d936a8fa1c6` as of time or writing)
+  + **Create AWS Batch Job Queue** matching the compute environment above.
+  + **Create Job Definition** using the `132714586118.dkr.ecr.us-east-2.amazonaws.com/stilt:latest` container stored as the "Container Image". Size is 4 vCPUs (cores) and `63500 MiB`. Make it slightly less than actual memory or it will be stuck in RUNNABLE. Set a volume with name "fsx" pointing to source path `/fsx` and a mount point in the container path `/fsx` with source volume "fsx".
+
+* **Sample job**:
+```
+stilt_wd=/app recep_file_loc=/fsx/in/HundredReceptors.RData recep_idx_s=1 recep_idx_e=25 met_dir=/fsx/in/met met_file_format=%Y%m%d_gfs0p25 xmn=-74.8 xmx=-71 ymn=39.7 ymx=42.1 xres=0.01 yres=0.01 ncores=4
 ```
 
 ## Conclusion 

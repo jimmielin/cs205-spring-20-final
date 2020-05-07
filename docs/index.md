@@ -83,13 +83,21 @@ Due to the significant overhead associated with launching new EC2 instances, AWS
 
 Results for the memory-intensive case using AWS Batch:
 | Node Type  | # of Workers | CPUs/Worker | Runtime [s] | EC2 Cost [$] | Total Cost [$] |
-| ---------  | ------------ | ----------- | ----------- | -------- |
+| ---------  | ------------ | ----------- | ----------- | --------     | -------------- |
 | r5.8xlarge | 1 | 16 | 5940 | 0.5519 | 1.3657 |
 | r5.2xlarge | 4 | 4 | 4385 | 0.4175 | 1.0183 |
+| r5.2xlarge | 5 | 4 | ... | ... | ... |
 | r5.2xlarge | 10 | 4 | 2595 | 0.6178 | 0.9733 |
-| r5.2xlarge | 20 | 4 | ... | ... |
+| r5.2xlarge | 20 | 4 | 1694 | 0.8065 | 1.039 |
 
-Cost is calculated using the spot instance price of $0.0857/hr for r5.2xlarge and $0.3345/hr for r5.4xlarge. FSx costs are included in the "Total Cost" column. We utilize FSx for fastest performance and throughput, but using slower, conventional SSD storage such as Amazon EFS may be possible on AWS Batch. Further information [is available in the AWS Documentation for AWS Batch](https://docs.aws.amazon.com/batch/latest/userguide/launch-templates.html).
+Cost is calculated using the spot instance price of $0.0857/hr for r5.2xlarge and $0.3345/hr for r5.4xlarge. FSx costs are included in the "Total Cost" column using $0.000137/second from calculations in the "Reproducibility" section below. We utilize FSx for fastest performance and throughput, but using slower, conventional SSD storage such as Amazon EFS may be possible on AWS Batch. Further information [is available in the AWS Documentation for AWS Batch](https://docs.aws.amazon.com/batch/latest/userguide/launch-templates.html).
+
+The AWS Batch case is then best optimized according to the following guidelines:
+* Favor a larger amount of smaller, cheaper instances over "fat nodes". Due to this case being memory-constrained, the `r5` family of memory-optimized nodes is used. The `r5` nodes are priced non-linearly: for example, `r5.4xlarge` spot pricing ($0.1933/hour as of time of writing) is more than 2x the `r5.2xlarge` at $0.0855/hour. If the workload scales well, simply scale horizontally rather than using larger nodes.
+
+* Ensure that the workload (**measured in particle count**) can be evenly divisible by **both** the # of workers used and number of CPUs per worker. For example, in terms of raw compute costs, the 4x4 `r5.2xlarge` case is much more efficient than the 10x4 or 20x4 `r5.2xlarge` cases, simply because we use 100 receptors that can be well divided into groups of 25 then later groups of 6. As the workload for each single particle can only run on one CPU (it is a time series problem that cannot be parallelized further), the workload must be well-distributed to prevent any kind of obvious unbalance. In fact it may be best to distribute over 5 workers with 4 nodes, so the workload is distributed in 5x4x5=100.
+
+* Take in account the cost of the storage. Amazon FSx is **very** expensive and so is your time. In this case try to use more nodes while preventing excessive fragmentation.
 
 #### Performance Analysis: Memory-Light Case
 ...

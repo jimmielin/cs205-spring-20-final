@@ -1,18 +1,21 @@
 # CS205 Spring 2020 Final Project: STILT Parallelization 
 Quick intro or sth 
 
-- [TOC - CS205 Spring 2020 Final Project: STILT Parallelization](#cs205-spring-2020-final-project--stilt-parallelization)
+- [CS205 Spring 2020 Final Project: STILT Parallelization](#cs205-spring-2020-final-project--stilt-parallelization)
   * [Abstract](#abstract)
   * [Introduction](#introduction)
     + [Problem Description](#problem-description)
     + [Model Code](#model-code)
     + [The Needs for HPC and Big Data](#the-needs-for-hpc-and-big-data)
+    + [Solutions](#solutions)
   * [Test Cases Experiments](#test-cases-experiments)
   * [Parallel Architecture Design](#parallel-architecture-design)
     + [Software Architecture](#software-architecture)
     + [Parallel Methods and Performance Analysis](#parallel-methods-and-performance-analysis)
       - [SLURM-based node parallelization](#slurm-based-node-parallelization)
       - [AWS Batch-based parallelization](#aws-batch-based-parallelization)
+      - [Performance Analysis: Memory-Light Case](#performance-analysis--memory-light-case)
+      - [Performance Analysis: Memory-Intensive Case](#performance-analysis--memory-intensive-case)
     + [Reproducibility Information](#reproducibility-information)
       - [SLURM-based on Harvard Cannon](#slurm-based-on-harvard-cannon)
       - [SLURM-based on AWS Cloud](#slurm-based-on-aws-cloud)
@@ -56,7 +59,9 @@ For the memory-intensive case, we used emission and receptor datasets based on a
 ### Parallel Methods and Performance Analysis
 #### SLURM-based node parallelization
 
-STILT includes a SLURM workload manager-based parallelization capability which we benchmark, analyze and optimized on the two computational cases previously described. ...
+STILT includes a SLURM workload manager-based parallelization capability which we benchmark, analyze and optimized on the two computational cases previously described. The SLURM parallelization is developed in Fasoli et al., 2018 and uses SLURM to launch a set of processes on different nodes in a shared run directory.
+
+We benchmark this capability within two computing environments: first on the [Harvard Research Computing (RC) Cannon Cluster](https://www.rc.fas.harvard.edu/) where initial tests with STILT parallelization and workflow is tuned. Then we migrate this environment to the [Amazon Web Services Cloud (AWS)](https://aws.amazon.com) using [AWS ParallelCluster](https://aws.amazon.com/hpc/parallelcluster/) to set up private HPC environments for use with STILT. The costs and optimal configuration for each computing environment is analyzed in our work.
 
 #### AWS Batch-based parallelization
 
@@ -72,30 +77,46 @@ We thus use the following architecture for our AWS Batch based parallelization a
 
 This approach is a hybrid parallel approach. It is parallel at the node level by launching multiple batch workers, and parallel within nodes by launching multiple processes within each batch worker.
 
-We benchmark this AWS Batch-based parallelization approach with the memory-heavy benchmark case, by using different container sizes (number of cores per node) and different number of containers (number of nodes), and comparing to previous results for cost-efficiency and scalability.
+We benchmark this AWS Batch-based parallelization approach with the memory-intensive benchmark case, by using different container sizes (number of cores per node) and different number of containers (number of nodes), and comparing to previous results for cost-efficiency and scalability.
 
 Due to the significant overhead associated with launching new EC2 instances, AWS Batch should only be used in a situation where the test case is sufficiently computationally intensive. For the "memory-light" case previously mentioned it may be simpler to use one large EC2 instance. The AWS Batch parallelization is most efficiently used in memory and compute-intensive cases that take a long time to run and can be efficiently sped up with horizontal scaling. As demonstrated in our test results, AWS Batch jobs enable "infinite" horizontal scaling of instances. It is important to note that we do not consider the overhead of launching the EC2 instances in our testing, as the instances have been previously pre-started by specifying a "Minimum vCPU" parameter in the AWS Batch Compute Environment description. In our experience it takes anytime from 2-5 minutes to spin up EC2 instances that are ready for use in Batch: thus the target computational time should be at least an order of magnitude higher than this time frame to be efficient.
 
-Results for the memory-heavy case using AWS Batch:
-| Node Type | # of Workers | CPUs/Worker | Runtime [s] | Cost [$] |
-| --------- | ------------ | ----------- | ----------- | -------- |
-| r5.2xlarge| 4 | 4 | 4385 | 0.4175 |
-| r5.2xlarge| 10 | 4 | ... | ... |
+Results for the memory-intensive case using AWS Batch:
+| Node Type  | # of Workers | CPUs/Worker | Runtime [s] | EC2 Cost [$] | Total Cost [$] |
+| ---------  | ------------ | ----------- | ----------- | -------- |
+| r5.8xlarge | 1 | 16 | 5940 | 0.5519 | 1.3657 |
+| r5.2xlarge | 4 | 4 | 4385 | 0.4175 | 1.0183 |
+| r5.2xlarge | 10 | 4 | 2595 | 0.6178 | 0.9733 |
+| r5.2xlarge | 20 | 4 | ... | ... |
 
+Cost is calculated using the spot instance price of $0.0857/hr for r5.2xlarge and $0.3345/hr for r5.4xlarge. FSx costs are included in the "Total Cost" column. We utilize FSx for fastest performance and throughput, but using slower, conventional SSD storage such as Amazon EFS may be possible on AWS Batch. Further information [is available in the AWS Documentation for AWS Batch](https://docs.aws.amazon.com/batch/latest/userguide/launch-templates.html).
 
-Cost is calculated using the spot instance price of $0.0857/hr for r5.2xlarge.
+#### Performance Analysis: Memory-Light Case
+...
+
+#### Performance Analysis: Memory-Intensive Case
+
+...
 
 ### Reproducibility Information
 #### SLURM-based on Harvard Cannon
 
 #### SLURM-based on AWS Cloud
-Please refer to the [STILT on AWS - ParallelCluster workflow document](https://github.com/jimmielin/cs205-spring-20-final/blob/master/docs/stilt_aws_slurm_workflow.md).
+Please refer to the [STILT on AWS - ParallelCluster workflow document](https://github.com/jimmielin/cs205-spring-20-final/blob/master/docs/stilt_aws_slurm_workflow.md). The primary elements of the set up include:
+
+* **AWS-ParallelCluster.** ([GitHub](https://github.com/aws/aws-parallelcluster)) An automatic deployment tool for managing HPC clusters on the AWS cloud. 
+
+* **Spack.** ([Github](https://github.com/spack/spack)) Used for deploying the software environment on the cloud for use in both master and compute nodes.
+
+* **Master Node** is powered using `t3.micro`, covered by the AWS Free Tier, during compute runs. The environment is set up on `t3.2xlarge` for higher performance; the master node can later be downgraded with no negative effects.
+
+* **Compute Nodes** are deployed using various different [AWS EC2 instance types](https://aws.amazon.com/ec2/instance-types/) by tweaking the respective cluster launch template and auto scaling group.
 
 #### AWS Batch
 
 Please refer to the [STILT on AWS - AWS Batch container creation](https://github.com/jimmielin/cs205-spring-20-final/blob/master/docs/stilt_aws_docker_workflow.md) for the creation steps for the container.
 
-* **FSx High-Performance File System**: Created on `us-east-2` with storage capacity of `1.2 TiB` and `200 MB/s/TiB (up to 1.3 GB/s/TiB burst)` highest-performance option for a throughput capacity of `234 MB/s`. Mounted on `/fsx` through all AWS Batch instances. Pricing is calculated using **persistent, 200 MB/s/TiB baseline** cost of `$0.29 GB/month`. For this instance this works out to be `$356.352/month` or `$0.00330/second`.
+* **FSx High-Performance File System**: Created on `us-east-2` with storage capacity of `1.2 TiB` and `200 MB/s/TiB (up to 1.3 GB/s/TiB burst)` highest-performance option for a throughput capacity of `234 MB/s`. Mounted on `/fsx` through all AWS Batch instances. Pricing is calculated using **persistent, 200 MB/s/TiB baseline** cost of `$0.29/GB/month`. For this instance this works out to be `$356.352/month` or `$0.000137/second`.
 
 Manual mount of this file system from within another EC2 instance is through the Lustre client:
 ```

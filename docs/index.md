@@ -68,7 +68,7 @@ The previous STILT docker run script only accepted single particles, rendering i
 
 We thus use the following architecture for our AWS Batch based parallelization approach:
 
-** hplin: insert figure here **
+![](images/stilt-batch-arch.png)
 
 This approach is a hybrid parallel approach. It is parallel at the node level by launching multiple batch workers, and parallel within nodes by launching multiple processes within each batch worker.
 

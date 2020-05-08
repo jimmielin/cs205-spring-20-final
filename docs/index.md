@@ -28,12 +28,14 @@ Quick intro or sth
 
 ## Introduction
 ### Problem Description
-Stochastic Time-Inverted Lagrangian Transport Model or STILT model is an atmospheric model that simulates air parcel movements using ensembles of particles starting from a particular time and location.  Although the model can run both forward and backward in time from the given starting location, the backward runs are more commonly used. The knowledge of air particle trajectories depends on the specified receptors, which are the locations that the measurements were made.  From the information obtained via STILT, one can construct the influence of an atmospheric observation, which has proven to be extremely useful for understanding atmospheric datasets. As the numbers of particles and receptors increase, the information of specific atmospheric datasets increases as well as the computational cost. Thus, the main challenge of using STILT is to come up with optimal numbers of receptors, numbers of particles, and the time that needs to be running backward for.
+Stochastic Time-Inverted Lagrangian Transport Model or STILT model is an atmospheric model that simulates air parcel movements using ensembles of particles starting from a particular time and location.  Although the model can run both forward and backward in time from the given starting location, the backward runs are more commonly used. The knowledge of air particle trajectories depends on the specified receptors, which are the locations that the measurements were made. From the information obtained via STILT, one can construct the influence of an atmospheric observation, which has proven to be extremely useful for understanding atmospheric datasets. As the numbers of particles and receptors increase, the information of specific atmospheric datasets increases as well as the computational cost. Thus, the main challenge of using STILT is to come up with optimal numbers of receptors, numbers of particles, and the time that needs to be running backward for.
 
 ### Model Code
-The STILT model code used in this work is available at https://github.com/uataq/stilt. 
+The STILT model code used in this work is available at [the uataq/stilt repository](https://github.com/uataq/stilt). AWS Batch code is available in [reproducibility/aws-batch](https://github.com/jimmielin/cs205-spring-20-final/tree/master/reproducibility/aws-batch) of this repository.
 
 ### The Needs for HPC and Big Data
+
+...
 
 ### Solutions
 
@@ -52,9 +54,17 @@ For the memory-intensive case, we used emission and receptor datasets based on a
 
 ## Parallel Architecture Design
 
-...
+As a lagrangian particle model, tracing particles backward in time using STILT is a data-parallel or "embarassingly parallel" problem. However, STILT relies on a proprietary trajectory/dispersion model called [HYSPLIT](https://www.ready.noaa.gov/HYSPLIT.php), written in Fortran and the source code being unavailable for public access. Our parallelization efforts thus assume STILT's trajectory component being a closed-source black box that we have no control over. There [have been previous efforts to parallelize HYSPLIT using OpenMP and GPUs](https://ieeexplore.ieee.org/document/8778420) however their source is unavailable. As our developments have been in R STILT code, our improvements can work in tandem with any upstream changes in the underlying Fortran HYSPLIT code to further speed up the model.
+
+STILT includes by default several approaches to parallelization, including process forking in a single-node operation, and using SLURM to create multiple distinct worker processes on each node for multi-node parallelization. This is accomplished as described in Fasoli et al., 2018.
+
+We benchmark the existing SLURM-based parallel architecture in our work and develop a new cloud-native AWS Batch method allowing STILT workers to be spawned in containers with AWS, thus achieving easy horizontal scaling.
 
 ### Software Architecture
+
+STILT is mostly written in [R](https://www.r-project.org/about.html) with a proprietary component, HYSPLIT, used for particle dispersion calculations. The source for STILT is free and open-source however HYSPLIT is proprietary and unavailable publicly and is only distributed with STILT in a binary form for a variety of platforms.
+
+Our development for STILT-Batch is written in R.
 
 ### Parallel Methods and Performance Analysis
 #### SLURM-based node parallelization
@@ -88,7 +98,7 @@ Results for the memory-intensive case using AWS Batch:
 | ---------  | ------------ | ----------- | ----------- | --------     | -------------- |
 | r5.8xlarge | 1 | 16 | 5940 | 0.5519 | 1.3657 |
 | r5.2xlarge | 4 | 4 | 4385 | 0.4175 | 1.0183 |
-| r5.2xlarge | 5 | 4 | ... | ... | ... |
+| r5.2xlarge | 5 | 4 | 4901 | 0.5834 | 1.2548 |
 | r5.2xlarge | 10 | 4 | 2595 | 0.6178 | 0.9733 |
 | r5.2xlarge | 20 | 4 | 1694 | 0.8065 | 1.039 |
 
@@ -97,7 +107,7 @@ Cost is calculated using the spot instance price of $0.0857/hr for r5.2xlarge an
 The AWS Batch case is then best optimized according to the following guidelines:
 * Favor a larger amount of smaller, cheaper instances over "fat nodes". Due to this case being memory-constrained, the `r5` family of memory-optimized nodes is used. The `r5` nodes are priced non-linearly: for example, `r5.4xlarge` spot pricing ($0.1933/hour as of time of writing) is more than 2x the `r5.2xlarge` at $0.0855/hour. If the workload scales well, simply scale horizontally rather than using larger nodes.
 
-* Ensure that the workload (**measured in particle count**) can be evenly divisible by **both** the # of workers used and number of CPUs per worker. For example, in terms of raw compute costs, the 4x4 `r5.2xlarge` case is much more efficient than the 10x4 or 20x4 `r5.2xlarge` cases, simply because we use 100 receptors that can be well divided into groups of 25 then later groups of 6. As the workload for each single particle can only run on one CPU (it is a time series problem that cannot be parallelized further), the workload must be well-distributed to prevent any kind of obvious unbalance. In fact it may be best to distribute over 5 workers with 4 nodes, so the workload is distributed in 5x4x5=100.
+* Ensure that the workload (**measured in particle count**) can be evenly divisible by **both** the # of workers used and number of CPUs per worker. For example, in terms of raw compute costs, the 4x4 `r5.2xlarge` case is much more efficient than the 10x4 or 20x4 `r5.2xlarge` cases, simply because we use 100 receptors that can be well divided into groups of 25 then later groups of 6. As the workload for each single particle can only run on one CPU (it is a time series problem that cannot be parallelized further), the workload must be well-distributed to prevent any kind of obvious unbalance. While the "optimal" configuration theoretically should be to distribute over 5 workers with 4 nodes, so the workload is distributed in 5x4x5=100, in reality this results in a higher cost than the 4-node case -- so it seems like there may be slight unbalances in the workload complicating the issue.
 
 * Take in account the cost of the storage. Amazon FSx is **very** expensive and so is your time. In this case try to use more nodes while preventing excessive fragmentation.
 

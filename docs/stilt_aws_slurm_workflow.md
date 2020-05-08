@@ -218,4 +218,26 @@ require('uataq')
 uataq::stilt_init('stilt_run')
 ```
 
+### General run guidelines
+* Use the `compute` partition.
+* To save time spinning up nodes, manually resize the AWS AutoScaling group. **Remember to shut your cluster off using `pcluster delete <name>` after all finished!**
+
 ### Setting up "Memory-Light" case: STILT Train Tutorial-02
+This case is memory lightweight and can be ran on conventional nodes with a minimal memory footprint.
+
+* Refer to the R configuration file [memory-light/run_stilt_AWS.r](https://github.com/jimmielin/cs205-spring-20-final/blob/master/cases/memory-light/run_stilt_AWS.r)
+* To run, use `Rscript run_stilt_AWS.r` within the case directory's `r` subdirectory.
+
+### Setting up "Memory-Intensive" case
+It is recommended to use AWS memory-optimized (`r` series instances) for this case. Each CPU requires a memory footprint of approximately 16 GiB.
+
+* Input data setup: within `/shared`
+```
+20190301_gfs0p25  HundredReceptors.RData stilt_run_heavy
+```
+* Refer to the R configuration file [memory-intensive/run_stilt.r](https://github.com/jimmielin/cs205-spring-20-final/blob/master/cases/memory-intensive/run_stilt.r)
+* To run, use `Rscript run_stilt.r` within the case directory's `r` subdirectory.
+
+### Useful commands
+* SLURM job information: `scontrol -d show job <JOBID>`
+* Accounting information: `sacct --format=JobID,JobName,NNodes,ReqCPUS,State,ExitCode,TotalCPU,MaxVMSize,Elapsed,ElapsedRaw`

@@ -114,9 +114,10 @@ The AWS Batch case is then best optimized according to the following guidelines:
 #### Performance Analysis: Memory-Light Case
 ...
 
-
+Strong Scaling runtime and speed up.
+![](images/Strong_Scaling.jpg)
 Weak Scaling runtime and speed up.
-![](images/Weak_Scaling.png)
+![](images/Weak_Scaling.jpg)
 
 
 #### Performance Analysis: Memory-Intensive Case

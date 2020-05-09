@@ -122,7 +122,11 @@ The AWS Batch case is then best optimized according to the following guidelines:
 
 <p align="center">
   <img width="400" src="images/Strong_Scaling.jpg">
-  <img width="400" src="images/Weak_Scaling.jpg">
+  <img width="400" src="images/light_tradeoff.jpg">
+</p>
+
+<p align="center">
+  <img width="400" src="images/Weak_Scaling.png">
 </p>
 
 #### Performance Analysis: Memory-Intensive Case

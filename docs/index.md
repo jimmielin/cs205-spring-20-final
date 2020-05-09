@@ -115,16 +115,21 @@ The AWS Batch case is then best optimized according to the following guidelines:
 
 #### Performance Analysis: Memory-Light Case
 ...
+The Memory-Light case focuses on the CO2 concentration along a part of the light-rail around Salt Lake City, where a major developer of STILT-R model, Fasoli, current works. It comprised of 215 receptors. The footprint for each receptor is calculated, and is then convolved with the emission inventory to get the total CO2 at the location of each receptor. Here we excluded the part of calculating the convolution when discussing about the performance, because that part is relatively fast and also, totally serialized. The full output of the model is shown in the figure below. It is a relatively memory-light case. The meteorological data has been properly subsetted, thus the memory requirement for each CPU is less than 4 GBs.
 
 <p align="center">
   <img width="400" src="images/Train_Diagram.png">
 </p>
 
+Two sets of experienments are conducted here. The first one is the strong scaling experienment, with a fixed problem size of. The full 215 receptors are used in this set. The program is run with both Cannon and AWS slurms. The change of the runtime with the number of cores is shown in the figure below. It can be seen that the runtime scales almost perfectly with the increase of cores, in all the experienments. The runtime in AWS experiments is generally shorter than the cases in Cannon runs, due to the difference of the machines. The experiments on AWS scales better than on Cannon, which demonstrates the potentially more robust performance of AWS machines. Interestingly, when using 64 cores on Cannon, or 16 cores on AWS C5.4 xlarge with two worker nodes, turning points appears comparing with the performances with less cores. A potential reason for that might due to the loading unbalance among different cores. When number of cores increases, the chance of having significant unbalance will also increase, because the number receptors on each core is relatively small. Further experienments need to be done to explore whether the turning point is robust.
+
+The cost for this strong scaling experiment set with different settings is also calculated, to serve as a reference for the more realistic memory-intensive case. The cost-runtime plot is shown below. Certain trade off can be seen in Cannon experienments, while the costs simply increase with the number of cores in AWS experienments. That is because on AWS, the program is ran on a totally occupied manner, i.e. when using the same amount of workers, the price will be the same, no matter how many cores are used. This is significantly form the mixed manner of Cannon, i.e. different job can share the same nodes. In the memory-light case, only one or two nodes on AWS would be enough to get the model finished relatively fast, thats why the trade off does not appear on AWS. 
 <p align="center">
   <img width="400" src="images/Strong_Scaling.jpg">
   <img width="400" src="images/light_tradeoff.png">
 </p>
 
+The second set of experiment is the memory-light case. In this experiment, we decided to simply decrease the number of receptors, instead of increasing it. We evenly use a subset of the total 215 receptors, with different number of cores. To be specified, we use 13 receptors for 1 core, 26 receptors for 2 cores,..., and 208 receptors for 16 cores. We are doing this weak scaling test only to check that whether the the performance scales good with the number of problem size, and the answer is "yes" according to the figure below. We can see that the runtime does not change significantly with the scale of the problem (or the number of cores). The runtime for the serial run is also plotted here as a reference.
 <p align="center">
   <img width="400" src="images/Weak_Scaling.png">
 </p>

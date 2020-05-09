@@ -131,7 +131,7 @@ The cost for this strong scaling experiment set with different settings is also 
 
 The second set of experiment is the memory-light case. In this experiment, we decided to simply decrease the number of receptors, instead of increasing it. We evenly use a subset of the total 215 receptors, with different number of cores. To be specified, we use 13 receptors for 1 core, 26 receptors for 2 cores,..., and 208 receptors for 16 cores. We are doing this weak scaling test only to check that whether the the performance scales good with the number of problem size, and the answer is "yes" according to the figure below. We can see that the runtime does not change significantly with the scale of the problem (or the number of cores). The runtime for the serial run is also plotted here as a reference.
 <p align="center">
-  <img width="400" src="images/Weak_Scaling.png">
+  <img width="400" src="images/Weak_Scaling.jpg">
 </p>
 
 #### Performance Analysis: Memory-Intensive Case

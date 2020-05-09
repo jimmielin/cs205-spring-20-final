@@ -122,7 +122,7 @@ The AWS Batch case is then best optimized according to the following guidelines:
 
 <p align="center">
   <img width="400" src="images/Strong_Scaling.jpg">
-  <img width="400" src="images/light_tradeoff.jpg">
+  <img width="400" src="images/light_tradeoff.png">
 </p>
 
 <p align="center">

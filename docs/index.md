@@ -114,7 +114,7 @@ The AWS Batch case is then best optimized according to the following guidelines:
 * Take in account the cost of the storage. Amazon FSx is **very** expensive and so is your time. In this case try to use more nodes while preventing excessive fragmentation.
 
 #### Performance Analysis: Memory-Light Case
-...
+
 The Memory-Light case focuses on the CO2 concentration along a part of the light-rail around Salt Lake City, where a major developer of STILT-R model, Fasoli, current works. It comprised of 215 receptors. The footprint for each receptor is calculated, and is then convolved with the emission inventory to get the total CO2 at the location of each receptor. Here we excluded the part of calculating the convolution when discussing about the performance, because that part is relatively fast and also, totally serialized. The full output of the model is shown in the figure below. It is a relatively memory-light case. The meteorological data has been properly subsetted, thus the memory requirement for each CPU is less than 4 GBs.
 
 <p align="center">

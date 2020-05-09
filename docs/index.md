@@ -35,7 +35,9 @@ The STILT model code used in this work is available at [the uataq/stilt reposito
 
 ### The Needs for HPC and Big Data
 
-...
+As atmospheric models develop to be increasingly higher resolution, lagrangian models such as STILT operate with higher resolution meteorological data and increasingly larger amounts of receptors and particles. The computational domain of the model has also seen an increase in size, drastically increasing the memory footprint of the problem. We demonstrate this very wide dynamic range in scale of computational intensity in the [experimental test cases](#test-cases-experiments) that we have selected for our project. While the lightweight case can be ran on conventional computing hardware with a megabytes-large memory footprint, the memory-intensive case requires nearly 16GB of memory per core with runtimes ranging to hours for each receptor on a state-of-the-art Intel Cascade Lake CPU. It is thus imperative to evaluate and expand STILT's parallel capabilities to High Performance Computing (HPC) enabling scientists to complete their model runs with better efficiency and shorter time, given the increasing computational requirements.
+
+At the same time, conventional HPC clusters have disadvantages to user workflow. For example, there is significant difficulty in software configuration, data set accessibility, and research reproducibility due to most of the clusters being closed-access to a select group of researchers (Zhuang et al., 2019). With the increasing popularity of cloud computing and its use in HPC applications, we demonstrate STILT's capability on the Amazon Web Services (AWS) cloud using both a replication of a conventional HPC cluster using [AWS ParallelCluster](https://aws.amazon.com/hpc/parallelcluster/), a logical and seamless transition to private cloud HPC for users accustomed to traditional HPC clusters. We then propose a cloud-native containerized approach by developing a new Docker-based container and STILT interface allowing for on-demand deployment of compute resources to run STILT using [AWS Batch](https://aws.amazon.com/batch/).
 
 ### Solutions
 
@@ -223,4 +225,6 @@ stilt_wd=/app recep_file_loc=/fsx/in/HundredReceptors.RData recep_idx_s=1 recep_
 
 
 ## References
-Fasoli, Benjamin, et al. "Simulating atmospheric tracer concentrations for spatially distributed receptors: updates to the Stochastic Time-Inverted Lagrangian Transport model's R interface (STILT-R version 2)." Geoscientific Model Development 11.7 (2018). 
+Fasoli, B., Lin, J. C., Bowling, D. R., Mitchell, L., and Mendoza, D.: Simulating atmospheric tracer concentrations for spatially distributed receptors: updates to the Stochastic Time-Inverted Lagrangian Transport model's R interface (STILT-R version 2), Geosci. Model Dev., 11, 2813–2824, https://doi.org/10.5194/gmd-11-2813-2018, 2018.
+
+Zhuang, J., Jacob, D. J., Flo Gaya, J., Yantosca, R. M., Lundgren, E. W., Sulprizio, M. P. and Eastham, S. D.: Enabling Immediate Access to Earth Science Models through Cloud Computing: Application to the GEOS-Chem Model, Bull. Amer. Meteor. Soc., 100, 1943-1940, https://doi.org/10.1175/BAMS-D-18-0243.1, 2019.

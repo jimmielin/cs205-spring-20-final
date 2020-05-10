@@ -138,7 +138,27 @@ The second set of experiment is the memory-light case. In this experiment, we de
 
 #### Performance Analysis: Memory-Intensive Case
 
-The memory-intensive case is based on a real scientific research problem of determining sources of particles detected during a flight campaign. 
+The memory-intensive case is based on a real scientific research problem. The task was to use STILT to determine sources of particles detected during a flight campaign in the New York City area. The original setup had 500 receptors and running backward in time for 24 hours. The memory requested was over 100 GB. The existing configuration took more than 24 hours of runtime on Cannon. 
+
+In this experiment, we investigated potential performance improvement of the research problem. We started off testing scalability of the problem by increasing the number of receptors from 100 to 500. The runtime increased proportionally to the number of receptors yet not linearly. This suggests the potential scalability of this memory-intensive problem  Another quick investigation was to increase number of workers and 
+<p align="center">
+  <img width="400" src="images/scalability_receptors.png">
+</p>
+
+
+<p align="center">
+  <img width="400" src="images/scalability_cores.png">
+</p>
+
+
+After we benchmarked Cannon, AWS-HPC, and AWS-Batch performances of completing the exact task. 
+
+
+<p align="center">
+  <img width="400" src="images/memory-intensive_tradeoff.png">
+</p>
+
+
 
 The AWS-Batch data is available in the [AWS Batch-based parallelization section](#aws-batch-based-parallelization) and is not reproduced here for brevity.
 

@@ -145,11 +145,13 @@ The memory-intensive case is based on a real scientific research problem. The ta
   <em>The domain of Memory-Intensive Case and a snapshot of tracers</em>
 </p>
 
-In this experiment, we investigated potential performance improvement of the research problem. We started off testing scalability of the problem by increasing the number of receptors from 100 to 500 using FASRC Cannon. The runtime increased proportionally to the number of receptors yet not linearly. This suggests the potential scalability of this memory-intensive problem  Another quick investigation was to increase number of workers while holding the number of receptors. The increase of  
+In this experiment, we investigated potential performance improvement of the research problem. We started off testing scalability of the problem by increasing the number of receptors from 100 to 500 using FASRC Cannon. The runtime increased proportionally to the number of receptors yet not linearly. This suggests the potential scalability of this memory-intensive problem  Another quick investigation was to increase number of workers while holding the number of receptors. The increase of number of cores is inversely proportional to the runtime. Similar to the increase in number of receptors, the relationship is not linear and closer to log-log scale. This observation indicates the potential of scalability of the problem.
+
+
 <p align="center">
   <img width="400" src="images/scalability_receptors.png">
   <br>
-  <em>The scalability based on the number of receptors</em>
+  <em>The scalability based on the number of receptors in (i) linear scale (left) and (ii) log-log scale (right) </em>
 </p>
 
 
@@ -161,7 +163,7 @@ In this experiment, we investigated potential performance improvement of the res
 </p>
 
 
-After that, we expanded our benchmark of the same task to AWS-HPC and AWS-Batch performances of completing the exact task. 
+After the initial investigations, we expanded our benchmark of the same task to AWS-HPC and AWS-Batch using the architecture that has already been mentioned in the previous section.
 
 
 <p align="center">

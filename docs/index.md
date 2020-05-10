@@ -189,7 +189,7 @@ From our trade-off plot, we found that the trade-off between monetary cost and t
 
 ======
 Note that AWS pricing is measured both in Spot pricing and On-Demand pricing as of May 4th 2020 in `us-east-2` region. The costs may be different in the future. These dots are shown on the plot simultaneously: the one with the higher cost is the On-Demand price; the lower one is the **Spot price**. We recommend the usage of the Spot price with minor caveats such as potential interruption of jobs.
->>>>>>> 3baee8c2484e33e7176308b4bdd29679d89d64fe
+
 
 
 The AWS-Batch data is available in the [AWS Batch-based parallelization section](#aws-batch-based-parallelization) and is not reproduced here for brevity.

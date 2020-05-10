@@ -136,6 +136,8 @@ The second set of experiment is the memory-light case. In this experiment, we de
 
 #### Performance Analysis: Memory-Intensive Case
 
+The AWS-Batch data is available in the [AWS Batch-based parallelization section](#aws-batch-based-parallelization) and is not reproduced here for brevity.
+
 ...
 
 ### Reproducibility Information
@@ -145,10 +147,11 @@ The memory-light case is conducted on huce_cascade partition of Cannon, which be
 The memory-intensive case is runned on .....(Ju)
 ##### Cost model
 We are not really asked to pay for the resources we used on Cannon, that said, we can still refer to the Billing model of FASRC for other schools around Harvard, to get a estimation for the cost for the computational resources. This cost can serve as a reference relative to the cost of AWS nodes. The cost model can be find at the following two websites: 1. https://www.rc.fas.harvard.edu/policy/billing-faq/; 2. https://docs.rc.fas.harvard.edu/kb/fairshare/. Generally speaking, the cost model for the huce_cascade partition follows the table below. We separately calculated the cost for the two different types shown here (Shared/Lab Owned), as a reference for different type of users.
+
 | TYPE | SERVICE UNIT | COST PER CPU/HR|
 | ---------  | ------------ | ----------- |
 | Shared | 1 Core + 6GB RAM | $0.0205 | 
-| requeue/Lab Owned | 1 Core + 6GB RAM | $0.0029| 
+| requeue/Lab Owned | 1 Core + 6GB RAM | $0.0029 |
 
 
 #### SLURM-based on AWS Cloud
@@ -227,10 +230,21 @@ In addition to a 8GB `gp2` mount at `/dev/xva` for base node-local storage.
 ```
 stilt_wd=/app recep_file_loc=/fsx/in/HundredReceptors.RData recep_idx_s=1 recep_idx_e=25 met_dir=/fsx/in/met met_file_format=%Y%m%d_gfs0p25 xmn=-74.8 xmx=-71 ymn=39.7 ymx=42.1 xres=0.01 yres=0.01 ncores=4
 ```
+  + Note the core count to use within each instance needs to be specified **both** in the job definition (to use **the number of logical cores**) and in the docker command (`ncores` parameter, using **the number of physical cores**). A detailed writeup of the effects of hyper-threading [is available from the AWS blog](https://aws.amazon.com/blogs/compute/disabling-intel-hyper-threading-technology-on-amazon-linux/).
+  + The data subsetting start and end index ranges are specified using `recep_idx_s` and `recep_idx_e`.
+  + Other STILT parameters are passed in as usual.
+
+At present, job launches using AWS Batch have to use the console to dispatch jobs manually. This is a limitation in scope of our work but can be overcome by writing a shell script for controlling the [AWS CLI](https://aws.amazon.com/cli/).
 
 ## Conclusion 
 
-...
+We have presented as a project an analysis of existing STILT parallelization infrastructure and adapted it to a cloud-native parallel approach. Using the existing SLURM-based parallelization capability, we've benchmarked STILT using a traditional HPC cluster on Harvard RC Cannon and built a cloud equivalent using AWS ParallelCluster.
+
+To supplement the parallelization capability of STILT and expand horizontal scaling capabilities and use cloud instance types more efficiently, we've developed a new cloud-native workflow based on AWS Batch. We develop a new Docker-based STILT container with a new R-based launcher script allowing for input data subsetting. We supplement this new architecture with a high-performance Lustre file system powered by Amazon FSx too ease any potential I/O bottleneck caused by a large amount of nodes reading and writing data concurrently.
+
+Our analysis shows that AWS Batch offers best scaling capabilities and performance at comparable low-cost compared to subsidized clusters like Cannon and AWS HPC clusters. However, while we have demonstrated this analysis using both a simple memory-light case and a memory-intensive case, future work may involve the development of a test suite to better measure the limitations of parallel capabilities of STILT.
+
+In its current implementation, STILT-Batch also requires manually configuring the Batch environment and may be better supplemented with the implementation of a "one-click" provisioning system using the AWS CLI, to ease users' transition to utilizing cloud computing.
 
 
 ## References

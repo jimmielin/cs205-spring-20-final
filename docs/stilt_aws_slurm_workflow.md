@@ -241,3 +241,35 @@ It is recommended to use AWS memory-optimized (`r` series instances) for this ca
 ### Useful commands
 * SLURM job information: `scontrol -d show job <JOBID>`
 * Accounting information: `sacct --format=JobID,JobName,NNodes,ReqCPUS,State,ExitCode,TotalCPU,MaxVMSize,Elapsed,ElapsedRaw`
+
+
+### Attachments
+* AWS ParallelCluster information for reproducing cluster setup. **Note that the Autoscaling Groups were manually edited for testing with different instances.** This can be done in the EC2 console.
+```
+[aws]
+aws_region_name = us-east-2
+
+[global]
+cluster_template = default
+update_check = true
+sanity_check = true
+
+[aliases]
+ssh = ssh -i "~/.ssh/hplin_aws_cs205_us2.pem" {CFN_USER}@{MASTER_IP} {ARGS}
+
+[cluster default]
+key_name = hplin_aws_cs205_us2
+base_os = alinux2
+scheduler = slurm
+compute_instance_type = c5.4xlarge
+maintain_initial_size = true
+vpc_settings = default
+
+[vpc default]
+vpc_id = vpc-aefc2dc5
+master_subnet_id = subnet-08270881aff711cb2
+compute_subnet_id = subnet-071b3d4f0e85c1cc5
+use_public_ips = false
+```
+
+* SLURM accounting logs are available in [reproducibility/aws/raw_sacct_outputs.log](https://github.com/jimmielin/cs205-spring-20-final/blob/master/reproducibility/aws/raw_sacct_outputs.log).

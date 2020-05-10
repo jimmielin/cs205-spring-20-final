@@ -22,6 +22,14 @@ Quick intro or sth
       - [AWS Batch](#aws-batch)
   * [Conclusion](#conclusion)
   * [References](#references)
+- Internal links for technical documentation
+  * [STILT on Cannon Workflow](https://github.com/jimmielin/cs205-spring-20-final/blob/master/docs/stilt_cannon_workflow.md).
+  * [STILT on Cannon: Memory Intensive Case Writeup](https://github.com/jimmielin/cs205-spring-20-final/blob/master/docs/Memory-intensive.md)
+  * [STILT on AWS - ParallelCluster Workflow](https://github.com/jimmielin/cs205-spring-20-final/blob/master/docs/stilt_aws_slurm_workflow.md)
+  * [STILT on AWS - Docker/AWS Batch/FSx Workflow](https://github.com/jimmielin/cs205-spring-20-final/blob/master/docs/stilt_aws_docker_workflow.md)
+  * Other technical resources:
+    + [Case run scripts and input files (custom)](https://github.com/jimmielin/cs205-spring-20-final/tree/master/cases)
+    + [AWS Batch custom code, including DockerFile](https://github.com/jimmielin/cs205-spring-20-final/tree/master/reproducibility/aws-batch)
 
 ## Abstract
 ...
@@ -172,9 +180,20 @@ After the initial investigations, we expanded our benchmark of the same task to 
   <em>Trade-off between the Runtime and the Cost for Memory-Intensive Case</em>  
 </p>
 
+
+
 As shown above, the monetary cost and time of running the task on both FASRC Cannon and AWS are comparable. If minimizing the cost is the priority, running the task on FASRC Cannon with 16 cores and 80 GB of memory on a lab-owned partition is the most budget-friendly option with a trade off of a longer completion time. If minimizing the monetary cost is prioritized, running the task on AWS-Batch with 40 cores on r5.2xlarge instance is the fastest option among the configurations that we tested on.
 
 From our trade-off plot, we found that the trade-off between monetary cost and time is not perfectly inverse. There are some cases that the increase in runtime also increases the monetary cost. This could be due to the imperfect parallelization of the model and the pricing algorithm of AWS. Our observation on this memory-intensive case suggests that it might be worthwhile for future investigation of optimal configuration that would suite to specific type of research problem. Such configuration would accelerate research process and allow researchers to spend their budget more efficiently. 
+
+
+<<<<<<< HEAD
+As shown above, the monetary cost and time of running the task on both FASRC Cannon and AWS are comparable. If minimizing the cost is the priority, running the task on FASRC Cannon with 16 cores and 80 GB of memory on a lab-owned partition is the most budget-friendly option with a trade off of a longer completion time. If minimizing the monetary cost is prioritized, running the task on AWS-Batch with 40 cores on r5.2xlarge instance is the fastest option among the configurations that we tested on.
+
+From our trade-off plot, we found that the trade-off between monetary cost and time is not perfectly inverse. There are some cases that the increase in runtime also increases the monetary cost. This could be due to the imperfect parallelization of the model and the pricing algorithm of AWS. Our observation on this memory-intensive case suggests that it might be worthwhile for future investigation of optimal configuration that would suite to specific type of research problem. Such configuration would accelerate research process and allow researchers to spend their budget more efficiently. 
+=======
+Note that AWS pricing is measured both in Spot pricing and On-Demand pricing as of May 4th 2020 in `us-east-2` region. The costs may be different in the future. These dots are shown on the plot simultaneously: the one with the higher cost is the On-Demand price; the lower one is the **Spot price**. We recommend the usage of the Spot price with minor caveats such as potential interruption of jobs.
+>>>>>>> 3baee8c2484e33e7176308b4bdd29679d89d64fe
 
 
 The AWS-Batch data is available in the [AWS Batch-based parallelization section](#aws-batch-based-parallelization) and is not reproduced here for brevity.
@@ -186,6 +205,8 @@ The AWS-Batch data is available in the [AWS Batch-based parallelization section]
 ##### Partitions
 The memory-light case is conducted on huce_cascade partition of Cannon, which belongs to the Harvard University Center for the Environment (HUCE). This partition is comprised of 2880 cores of water cooled Intel Cascade Lake, each node has 48 cores and 192 GB of RAM. Subject to requeue by huce_cascade_priority. A document for this partition can be found at https://docs.rc.fas.harvard.edu/kb/huce-partitions/.
 The memory-intensive case is runned on .....(Ju)
+
+
 ##### Cost model
 We are not really asked to pay for the resources we used on Cannon, that said, we can still refer to the Billing model of FASRC for other schools around Harvard, to get a estimation for the cost for the computational resources. This cost can serve as a reference relative to the cost of AWS nodes. The cost model can be find at the following two websites: 1. https://www.rc.fas.harvard.edu/policy/billing-faq/; 2. https://docs.rc.fas.harvard.edu/kb/fairshare/. Generally speaking, the cost model for the huce_cascade partition follows the table below. We separately calculated the cost for the two different types shown here (Shared/Lab Owned), as a reference for different type of users.
 
@@ -208,7 +229,9 @@ Please refer to the [STILT on AWS - ParallelCluster workflow document](https://g
 
 #### AWS Batch
 
-Please refer to the [STILT on AWS - AWS Batch container creation](https://github.com/jimmielin/cs205-spring-20-final/blob/master/docs/stilt_aws_docker_workflow.md) for the creation steps for the container.
+Please refer to the [STILT on AWS - AWS Batch container creation](https://github.com/jimmielin/cs205-spring-20-final/blob/master/docs/stilt_aws_docker_workflow.md) for the creation steps for the container and other specific details.
+
+The reproducibility information for the individual components of the AWS Batch test are available below:
 
 * **FSx High-Performance File System**: Created on `us-east-2` with storage capacity of `1.2 TiB` and `200 MB/s/TiB (up to 1.3 GB/s/TiB burst)` highest-performance option for a throughput capacity of `234 MB/s`. Mounted on `/fsx` through all AWS Batch instances. Pricing is calculated using **persistent, 200 MB/s/TiB baseline** cost of `$0.29/GB/month`. For this instance this works out to be `$356.352/month` or `$0.000137/second`.
 

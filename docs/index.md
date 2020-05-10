@@ -194,7 +194,6 @@ Note that AWS pricing is measured both in Spot pricing and On-Demand pricing as 
 
 The AWS-Batch data is available in the [AWS Batch-based parallelization section](#aws-batch-based-parallelization) and is not reproduced here for brevity.
 
-...
 
 ### Reproducibility Information
 #### SLURM-based on Harvard Cannon

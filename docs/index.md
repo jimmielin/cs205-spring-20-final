@@ -155,7 +155,7 @@ After we benchmarked Cannon, AWS-HPC, and AWS-Batch performances of completing t
 
 
 <p align="center">
-  <img width="400" src="images/memory-intentive_tradeoff.png">
+  <img width="400" src="images/memory-Intentive_tradeoff.png">
 </p>
 
 

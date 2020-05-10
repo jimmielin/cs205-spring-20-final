@@ -143,12 +143,14 @@ The memory-intensive case is based on a real scientific research problem. The ta
 In this experiment, we investigated potential performance improvement of the research problem. We started off testing scalability of the problem by increasing the number of receptors from 100 to 500. The runtime increased proportionally to the number of receptors yet not linearly. This suggests the potential scalability of this memory-intensive problem  Another quick investigation was to increase number of workers and 
 <p align="center">
   <img width="400" src="images/scalability_receptors.png">
+  *The scalability based on the number of receptors*
 </p>
 
 
 <p align="center">
   <img width="400" src="images/scalability_cores.png">
 </p>
+.center[A figure caption.]
 
 
 After we benchmarked Cannon, AWS-HPC, and AWS-Batch performances of completing the exact task. 

@@ -138,6 +138,8 @@ The second set of experiment is the memory-light case. In this experiment, we de
 
 #### Performance Analysis: Memory-Intensive Case
 
+The memory-intensive case is based on a real scientific research problem of determining sources of particles detected during a flight campaign. 
+
 The AWS-Batch data is available in the [AWS Batch-based parallelization section](#aws-batch-based-parallelization) and is not reproduced here for brevity.
 
 ...

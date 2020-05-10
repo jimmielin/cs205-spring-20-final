@@ -139,19 +139,29 @@ The second set of experiment is the memory-light case. In this experiment, we de
 #### Performance Analysis: Memory-Intensive Case
 
 The memory-intensive case is based on a real scientific research problem. The task was to use STILT to determine sources of particles detected during a flight campaign in the New York City area. The original setup had 500 receptors and running backward in time for 24 hours. The memory requested was over 100 GB. The existing configuration took more than 24 hours of runtime on Cannon. 
+<p align="center">
+  <img width="400" src="images/NYC_map.png">
+  <br>
+  <em>The domain of Memory-Intensive Case and a snapshot of tracers</em>
+</p>
 
-In this experiment, we investigated potential performance improvement of the research problem. We started off testing scalability of the problem by increasing the number of receptors from 100 to 500. The runtime increased proportionally to the number of receptors yet not linearly. This suggests the potential scalability of this memory-intensive problem  Another quick investigation was to increase number of workers and 
+In this experiment, we investigated potential performance improvement of the research problem. We started off testing scalability of the problem by increasing the number of receptors from 100 to 500 using FASRC Cannon. The runtime increased proportionally to the number of receptors yet not linearly. This suggests the potential scalability of this memory-intensive problem  Another quick investigation was to increase number of workers while holding the number of receptors. The increase of  
 <p align="center">
   <img width="400" src="images/scalability_receptors.png">
+  <br>
+  <em>The scalability based on the number of receptors</em>
 </p>
 
 
 <p align="center">
   <img width="400" src="images/scalability_cores.png">
+  <img width="400" src="images/scalability_cores_log.png">
+  <br>
+  <em>The scalability based on the number of cores</em>
 </p>
 
 
-After we benchmarked Cannon, AWS-HPC, and AWS-Batch performances of completing the exact task. 
+After that, we expanded our benchmark of the same task to AWS-HPC and AWS-Batch performances of completing the exact task. 
 
 
 <p align="center">

@@ -1,0 +1,1 @@
+The meteorology data `20190301_gfs0p25` for running the memory-intensive case is too large to upload to GitHub. The 2GB file is available in Google Drive for Harvard users: https://drive.google.com/open?id=1SC9cFzp6fI0eLOn8ohzEhdyBV7E_BU2D

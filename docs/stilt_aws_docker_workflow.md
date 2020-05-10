@@ -153,3 +153,7 @@ docker tag stilt 132714586118.dkr.ecr.us-east-2.amazonaws.com/stilt
 <p align="center">
   <img width="400" src="images/stilt-batch-jobdef.png">
 </p>
+
+* **Launch jobs.** At present it has to be done manually. Specify the subset indices using `recep_idx_s` and `recep_idx_e` until you cover all receptors (our data is `1` to `100`. If divided into 5 nodes, you would have to launch tasks coded respectively: 1-20, 21-40, 41-60, 61-80, 81-100).
+
+**Take note of the jobs once you've submitted them. The logs are purged frequently. (The output is not.)**

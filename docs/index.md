@@ -75,7 +75,9 @@ STILT includes a SLURM workload manager-based parallelization capability which w
 
 ![](images/STILT_R_Parallel.png)
 
-We benchmark this capability within two computing environments: first on the [Harvard Research Computing (RC) Cannon Cluster](https://www.rc.fas.harvard.edu/) where initial tests with STILT parallelization and workflow is tuned. Then we migrate this environment to the [Amazon Web Services Cloud (AWS)](https://aws.amazon.com) using [AWS ParallelCluster](https://aws.amazon.com/hpc/parallelcluster/) to set up private HPC environments for use with STILT. The costs and optimal configuration for each computing environment is analyzed in our work. 
+We benchmark this capability within two computing environments: first on the [Harvard Research Computing (RC) Cannon Cluster](https://www.rc.fas.harvard.edu/) where initial tests with STILT parallelization and workflow is tuned. Then we migrate this environment to the [Amazon Web Services Cloud (AWS)](https://aws.amazon.com) using [AWS ParallelCluster](https://aws.amazon.com/hpc/parallelcluster/) to set up private HPC environments for use with STILT. The costs and optimal configuration for each computing environment is analyzed in our work.
+
+An important to note is that the cost analysis in our writeup is performed using [reference numbers for Cannon cluster cost](#slurm-based-on-harvard-cannon) and [AWS Spot instance pricing](https://aws.amazon.com/ec2/spot/pricing/). While we have not encountered this issue in our testing, **there is a possibility that spot instances launched are terminated due to capacity limitations** (outbid by on-demand instances). For potential time-critical applications of STILT on the Cloud, it may be prudent to use a less congested region (we use `us-east-2`), on-demand instances, or develop a script to automatically resume jobs that were terminated due to spot capacity. It may be easier to perform this in AWS Batch as "data subsetting" essentially serves as a crude method for checkpointing work.
 
 #### AWS Batch-based parallelization
 
@@ -148,7 +150,7 @@ The memory-intensive case is runned on .....(Ju)
 ##### Cost model
 We are not really asked to pay for the resources we used on Cannon, that said, we can still refer to the Billing model of FASRC for other schools around Harvard, to get a estimation for the cost for the computational resources. This cost can serve as a reference relative to the cost of AWS nodes. The cost model can be find at the following two websites: 1. https://www.rc.fas.harvard.edu/policy/billing-faq/; 2. https://docs.rc.fas.harvard.edu/kb/fairshare/. Generally speaking, the cost model for the huce_cascade partition follows the table below. We separately calculated the cost for the two different types shown here (Shared/Lab Owned), as a reference for different type of users.
 
-| TYPE | SERVICE UNIT | COST PER CPU/HR|
+| TYPE | SERVICE UNIT | COST PER CPU/HR |
 | ---------  | ------------ | ----------- |
 | Shared | 1 Core + 6GB RAM | $0.0205 | 
 | requeue/Lab Owned | 1 Core + 6GB RAM | $0.0029 |

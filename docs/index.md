@@ -187,11 +187,7 @@ As shown above, the monetary cost and time of running the task on both FASRC Can
 From our trade-off plot, we found that the trade-off between monetary cost and time is not perfectly inverse. There are some cases that the increase in runtime also increases the monetary cost. This could be due to the imperfect parallelization of the model and the pricing algorithm of AWS. Our observation on this memory-intensive case suggests that it might be worthwhile for future investigation of optimal configuration that would suite to specific type of research problem. Such configuration would accelerate research process and allow researchers to spend their budget more efficiently. 
 
 
-<<<<<<< HEAD
-As shown above, the monetary cost and time of running the task on both FASRC Cannon and AWS are comparable. If minimizing the cost is the priority, running the task on FASRC Cannon with 16 cores and 80 GB of memory on a lab-owned partition is the most budget-friendly option with a trade off of a longer completion time. If minimizing the monetary cost is prioritized, running the task on AWS-Batch with 40 cores on r5.2xlarge instance is the fastest option among the configurations that we tested on.
-
-From our trade-off plot, we found that the trade-off between monetary cost and time is not perfectly inverse. There are some cases that the increase in runtime also increases the monetary cost. This could be due to the imperfect parallelization of the model and the pricing algorithm of AWS. Our observation on this memory-intensive case suggests that it might be worthwhile for future investigation of optimal configuration that would suite to specific type of research problem. Such configuration would accelerate research process and allow researchers to spend their budget more efficiently. 
-=======
+======
 Note that AWS pricing is measured both in Spot pricing and On-Demand pricing as of May 4th 2020 in `us-east-2` region. The costs may be different in the future. These dots are shown on the plot simultaneously: the one with the higher cost is the On-Demand price; the lower one is the **Spot price**. We recommend the usage of the Spot price with minor caveats such as potential interruption of jobs.
 >>>>>>> 3baee8c2484e33e7176308b4bdd29679d89d64fe
 

@@ -195,9 +195,8 @@ The AWS-Batch data is available in the [AWS Batch-based parallelization section]
 ### Reproducibility Information
 #### SLURM-based on Harvard Cannon
 ##### Partitions
-The memory-light case is conducted on `huce_cascade` partition of Cannon, which belongs to the Harvard University Center for the Environment (HUCE). This partition is comprised of 2880 cores of water cooled Intel Cascade Lake, each node has 48 cores and 192 GB of RAM. Subject to requeue by huce_cascade_priority. A document for this partition can be found at https://docs.rc.fas.harvard.edu/kb/huce-partitions/.
 
-The memory-intensive case is ran on the `shared` Cannon partition. ...
+The Cannon part of the experienment is conducted on `huce_cascade` partition of Cannon, which belongs to the Harvard University Center for the Environment (HUCE). This partition is comprised of 2880 cores of water cooled Intel Cascade Lake, each node has 48 cores and 192 GB of RAM. Subject to requeue by huce_cascade_priority. A document for this partition can be found at https://docs.rc.fas.harvard.edu/kb/huce-partitions/.
 
 
 ##### Cost model

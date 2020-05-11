@@ -204,8 +204,8 @@ We are not really asked to pay for the resources we used on Cannon, that said, w
 
 | TYPE | SERVICE UNIT | COST PER CPU/HR |
 | ---------  | ------------ | ----------- |
-| Shared | 1 Core + 6GB RAM | $0.0205 | 
-| requeue/Lab Owned | 1 Core + 6GB RAM | $0.0029 |
+| Shared | 1 Core + 4GB RAM | $0.0205 | 
+| requeue/Lab Owned | 1 Core + 4GB RAM | $0.0029 |
 
 
 #### SLURM-based on AWS Cloud

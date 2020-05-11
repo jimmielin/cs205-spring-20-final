@@ -177,12 +177,12 @@ After the initial investigations, we expanded our benchmark of the same task to 
 <p align="center">
   <img width="700" src="images/memory-Intentive_tradeoff.png">
   <br>
-  <em>Trade-off between the Runtime and the Cost for Memory-Intensive Case</em>  
+  <em>Trade-off between the Runtime and the Cost for Memory-Intensive Case: circle and cross points are from AWS spot instances, triangle and diamond points are from AWS On-Demand instances, and square and star points are from FASRC Cannon. The numbers next to the points indicate the cores used by the instances. </em>  
 </p>
 
 
 
-As shown above, the monetary cost and time of running the task on both FASRC Cannon and AWS are comparable. If minimizing the cost is the priority, running the task on FASRC Cannon with 16 cores and 80 GB of memory on a lab-owned partition is the most budget-friendly option with a trade off of a longer completion time. If minimizing the monetary cost is prioritized, running the task on AWS-Batch with 40 cores on r5.2xlarge instance is the fastest option among the configurations that we tested on.
+As shown in the figure above above, the monetary cost and time of running the task on both FASRC Cannon and AWS are comparable. AWS On-Demand Instances are generally more expansive than the Spot instances. Running on Cannon can be either more expensive or cheaper than AWS depending on the ownership of the partition. The lab-owned ones can be less expensive than AWS. Increasing the numbers of cores can generally reduce the runtime. Reducing the runtime generally comes with the monetary cost. If minimizing the cost is the priority, running the task on FASRC Cannon with 16 cores and 80 GB of memory on a lab-owned partition is the most budget-friendly option with a trade off of a longer completion time. If minimizing the monetary cost is prioritized, running the task on AWS-Batch with 40 cores on r5.2xlarge instance is the fastest option among the configurations that we tested on.
 
 From our trade-off plot, we found that the trade-off between monetary cost and time is not perfectly inverse. There are some cases that the increase in runtime also increases the monetary cost. This could be due to the imperfect parallelization of the model and the pricing algorithm of AWS. Our observation on this memory-intensive case suggests that it might be worthwhile for future investigation of optimal configuration that would suite to specific type of research problem. Such configuration would accelerate research process and allow researchers to spend their budget more efficiently. 
 

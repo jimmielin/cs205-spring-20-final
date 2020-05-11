@@ -177,7 +177,7 @@ After the initial investigations, we expanded our benchmark of the same task to 
 <p align="center">
   <img width="700" src="images/memory-Intentive_tradeoff.png">
   <br>
-  <em>Trade-off between the Runtime and the Cost for Memory-Intensive Case: circle and cross points are from AWS spot instances, triangle and diamond points are from AWS On-Demand instances, and square and star points are from FASRC Cannon. The numbers next to the points indicate the cores used by the instances. </em>  
+  <em>Trade-off between the Runtime and the Cost for Memory-Intensive Case. Circle and cross points are from AWS spot instances, triangle and diamond points are from AWS On-Demand instances, and square and star points are from FASRC Cannon. The numbers next to the points indicate the cores used by the instances. </em>  
 </p>
 
 

@@ -1,5 +1,5 @@
 # CS205 Spring 2020 Final Project: STILT Parallelization 
-Quick intro or sth 
+Group 16, Spring 2019-20, CS205 Class Project
 
 - [CS205 Spring 2020 Final Project: STILT Parallelization](#cs205-spring-2020-final-project--stilt-parallelization)
   * [Abstract](#abstract)
@@ -32,7 +32,7 @@ Quick intro or sth
     + [AWS Batch custom code, including DockerFile](https://github.com/jimmielin/cs205-spring-20-final/tree/master/reproducibility/aws-batch)
 
 ## Abstract
-...
+We present the analysis and improvement in parallelizing the Stochastic Time-Inverted Lagrangian Transport Model (STILT) model with emphasis in porting the code to cloud architectures and cost-time efficiency. STILT is parallelized using its built-in SLURM-based job dispatch system and a cloud-native batch system developed in this work. We analyze STILT's performance on the Harvard RC Cannon cluster and a private HPC environment on the cloud using Amazon Web Services (AWS) ParallelCluster using SLURM based parallelization with two cases with different computational and memory requirements, and further parallelize a memory intensive case using AWS Batch and a Lustre high-performance file system using Amazon FSx. Both SLURM-based parallelization and our implementation of STILT on AWS Batch have exhibited good scalability and AWS Batch exhibits good horizontal scaling in addition to cost efficiency. Although Harvard Cannon is the cheapest option to run the model, it is a subsidized option not available to all STILT users. We demonstrate that using the AWS cloud it is possible to attain excellent performance and scalability at a comparable cost to Cannon using AWS Spot Instances.
 
 ## Introduction
 ### Problem Description
@@ -187,10 +187,7 @@ As shown above, the monetary cost and time of running the task on both FASRC Can
 From our trade-off plot, we found that the trade-off between monetary cost and time is not perfectly inverse. There are some cases that the increase in runtime also increases the monetary cost. This could be due to the imperfect parallelization of the model and the pricing algorithm of AWS. Our observation on this memory-intensive case suggests that it might be worthwhile for future investigation of optimal configuration that would suite to specific type of research problem. Such configuration would accelerate research process and allow researchers to spend their budget more efficiently. 
 
 
-======
 Note that AWS pricing is measured both in Spot pricing and On-Demand pricing as of May 4th 2020 in `us-east-2` region. The costs may be different in the future. These dots are shown on the plot simultaneously: the one with the higher cost is the On-Demand price; the lower one is the **Spot price**. We recommend the usage of the Spot price with minor caveats such as potential interruption of jobs.
-
-
 
 The AWS-Batch data is available in the [AWS Batch-based parallelization section](#aws-batch-based-parallelization) and is not reproduced here for brevity.
 
@@ -198,8 +195,9 @@ The AWS-Batch data is available in the [AWS Batch-based parallelization section]
 ### Reproducibility Information
 #### SLURM-based on Harvard Cannon
 ##### Partitions
-The memory-light case is conducted on huce_cascade partition of Cannon, which belongs to the Harvard University Center for the Environment (HUCE). This partition is comprised of 2880 cores of water cooled Intel Cascade Lake, each node has 48 cores and 192 GB of RAM. Subject to requeue by huce_cascade_priority. A document for this partition can be found at https://docs.rc.fas.harvard.edu/kb/huce-partitions/.
-The memory-intensive case is runned on .....(Ju)
+The memory-light case is conducted on `huce_cascade` partition of Cannon, which belongs to the Harvard University Center for the Environment (HUCE). This partition is comprised of 2880 cores of water cooled Intel Cascade Lake, each node has 48 cores and 192 GB of RAM. Subject to requeue by huce_cascade_priority. A document for this partition can be found at https://docs.rc.fas.harvard.edu/kb/huce-partitions/.
+
+The memory-intensive case is ran on the `shared` Cannon partition. ...
 
 
 ##### Cost model

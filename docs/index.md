@@ -200,7 +200,7 @@ The Cannon part of the experienment is conducted on `huce_cascade` partition of 
 
 
 ##### Cost model
-We are not really asked to pay for the resources we used on Cannon, that said, we can still refer to the Billing model of FASRC for other schools around Harvard, to get a estimation for the cost for the computational resources. This cost can serve as a reference relative to the cost of AWS nodes. The cost model can be find at the following two websites: 1. https://www.rc.fas.harvard.edu/policy/billing-faq/; 2. https://docs.rc.fas.harvard.edu/kb/fairshare/. Generally speaking, the cost model for the huce_cascade partition follows the table below. We separately calculated the cost for the two different types shown here (Shared/Lab Owned), as a reference for different type of users.
+We are not really asked to pay for the resources we used on Cannon, that said, we can still refer to the Billing model of FASRC for other schools around Harvard, to get a estimation for the cost for the computational resources. This cost can serve as a reference relative to the cost of AWS nodes. The cost model can be find at the following two websites: 1. https://www.rc.fas.harvard.edu/policy/billing-faq/; 2. https://docs.rc.fas.harvard.edu/kb/fairshare/. Generally speaking, the cost model for the huce_cascade partition follows the table below. In other words, if we use x cores and y GB of memory, and the cost per CPU/HR is z, the cost would be $z \cdot tmax(x,y/6GB)$. We separately calculated the cost for the two different types shown here (Shared/Lab Owned), as a reference for different type of users. 
 
 | TYPE | SERVICE UNIT | COST PER CPU/HR |
 | ---------  | ------------ | ----------- |

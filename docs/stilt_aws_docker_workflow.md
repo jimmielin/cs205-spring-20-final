@@ -3,6 +3,7 @@
 
 * Refer to [roughly the same instructions as AWS-ParallelCluster](https://github.com/jimmielin/cs205-spring-20-final/blob/master/docs/stilt_aws_slurm_workflow.md) to install STILT on a host machine to create the docker container. A quick recap using Spack:
 
+
 ```
 sudo yum install libcurl-devel
 spack install netcdf-c@4.7.3 r@3.6.3 proj@5.0.1 gdal@2.3.0 udunits@2.2.26 geos@3.6.2
@@ -76,7 +77,7 @@ ENTRYPOINT ["/app/r/stilt_cli_multi.r", \
                 "met_dir=/app/in/met"]
 ```
 
-* Create the docker container: `docker built -t stilt .`. This will take a while.
+* Create the docker container using this command: `docker build -t stilt .`. This will take a while.
 * Verify the docker container operates correctly: This assumes you are using the ParallelCluster-based environment to build the container for testing.
 ```
 docker run --rm --mount type=bind,source=/shared,destination=/app/in,readonly   --mount type=bind,source=/shared/out,destination=/app/out   stilt   stilt_wd=/app   recep_file_loc=/app/in/HundredReceptors.RData   recep_idx_s=5 recep_idx_e=10   met_dir=/app/in/met met_file_format=%Y%m%d_gfs0p25   xmn=-74.8 xmx=-71 ymn=39.7 ymx=42.1 xres=0.01 yres=0.01   ncores=1
